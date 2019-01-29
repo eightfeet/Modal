@@ -1,5 +1,18 @@
+$ui-perrem: get('basefont');
+
+/***
+string2number
+***/
+@function strip-units($number){
+  @return $number / ($number * 0 + 1);
+}
+
+/* stylelint-disable */
+/***
+fixpx
+***/
 @function fixpx($px) {
-    @return ($px/31.25)+em;
+  @return ($px/strip-units($ui-perrem))+rem;
 }
 
 $gray: gray;

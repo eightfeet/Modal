@@ -13,6 +13,71 @@ let cdn = process.env.PUBLIC_PATH || './';
 const evn = process.env.UAT_ENV;
 const isUat = evn === 'uat' ? true : false;
 
+const sass = require('node-sass');
+/**
+ * This handy function converts JS values to Sass values,
+ * such as an JSON object to a Sass map, making it possible
+ * to use the values from our JS in our Sass
+ */
+const sassUtils = require('node-sass-utils')(sass);
+const sassVars = require(__dirname + '/theme.config.js');
+
+// Convert js strings to dimensions
+const convertStringToSassDimension = function(result) {
+	// Only attempt to convert strings
+	if (typeof result !== "string") {
+	  return result;
+	}
+  
+	const cssUnits = [
+	  "rem",
+	  "em",
+	  "vh",
+	  "vw",
+	  "vmin",
+	  "vmax",
+	  "ex",
+	  "%",
+	  "px",
+	  "cm",
+	  "mm",
+	  "in",
+	  "pt",
+	  "pc",
+	  "ch"
+	];
+	const parts = result.match(/[a-zA-Z]+|[0-9]+/g);
+	const value = parts[0];
+	const unit = parts[parts.length - 1];
+	if (cssUnits.indexOf(unit) !== -1) {
+	  result = new sassUtils.SassDimension(parseInt(value, 10), unit);
+	}
+  
+	return result;
+};
+
+const getSassKey = function(keys) {
+	keys = keys.getValue().split(".");
+	let result = sassVars;
+	let i;
+	for (i = 0; i < keys.length; i++) {
+	  result = result[keys[i]];
+	  // Convert to SassDimension if dimenssion
+	  if (typeof result === "string") {
+			result = convertStringToSassDimension(result);
+	  } else if (typeof result === "object") {
+			Object.keys(result).forEach((key) => {
+				let value = result[key];
+				result[key] = convertStringToSassDimension(value);
+			});
+	  }
+	}
+	result = sassUtils.castToSass(result);
+	return result;
+};
+
+
+
 module.exports = (env, argv) => ({
 	entry: './src/index.js',
 	context: path.resolve(__dirname),
@@ -62,7 +127,10 @@ module.exports = (env, argv) => ({
 						options: {
 							sourceMap: true,
 							data: '@import "variables.scss";',
-							includePaths: [path.resolve(__dirname, "src/style")]
+							includePaths: [path.resolve(__dirname, "src/style")],
+							functions: {
+								"get($keys)" : getSassKey
+							}
 						}
 					}
 				]
@@ -89,7 +157,10 @@ module.exports = (env, argv) => ({
 					}, {
 						loader: "sass-loader",
 						options: {
-							sourceMap: true
+							sourceMap: true,
+							functions: {
+								"get($keys)" : getSassKey
+							}
 						}
 					}
 				]
@@ -134,7 +205,9 @@ module.exports = (env, argv) => ({
 	plugins: [
 		new DefinePlugin({
 			__UAT__: isUat ? 'true' : 'false',
-			__PRD__: argv.mode === 'production' && !isUat ? 'true' : 'false'
+			__PRD__: argv.mode === 'production' && !isUat ? 'true' : 'false',
+			__BASEFONT__: JSON.stringify(sassVars.basefont),
+			__UIWIDTH__: JSON.stringify(sassVars.width)
 		}),
 		new HtmlWebpackPlugin({
 			minify: {

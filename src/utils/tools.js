@@ -38,3 +38,8 @@ export function inlineStyle(style) {
 	});
 	return result;
 }
+
+export function fixpx(px) {
+	// eslint-disable-next-line no-undef
+	return px ? `${parseFloat(px)/parseFloat(__BASEFONT__)}em`: 0;
+}

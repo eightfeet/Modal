@@ -1,4 +1,5 @@
 import './style/common';
+import {fixpx} from './utils/tools';
 if (window.Promise === undefined) {
 	throw new Error('Promise pollyfill not found.');
 }
@@ -12,7 +13,7 @@ const newModal = new Modal({
 		},
 		content: {
 			backgroundColor: 'rgba(100, 100, 100, 0.2)',
-			width: '20em',
+			width: fixpx(700),
 			zIndex: 101
 		},
 		modify: [

@@ -7,7 +7,6 @@ export default function (elements, config) {
 	const { overlay, content, modify } = style || {};
 	const operateElements = elements || {};
 	const operateModify = modify || [];
-
 	let doms= null;
 
 	for (let index = 0; index < operateModify.length; index++) {

@@ -1,4 +1,4 @@
-import { UI } from "~/config.js";
+/* eslint-disable no-undef */
 
 const isPC = !(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i));
 
@@ -16,10 +16,13 @@ function setEmBase (dom) {
 		dom.style.fontSize = '16px';
 		return;
 	}
-	if (clientWidth >= UI.width) {
-		dom.style.fontSize = UI.baseonFontsize + "px";
+	const baseFont = parseFloat(__BASEFONT__);
+	const uiWidth = parseFloat(__UIWIDTH__);
+
+	if (clientWidth >= uiWidth) {
+		dom.style.fontSize = baseFont + "px";
 	} else {
-		dom.style.fontSize = UI.baseonFontsize * (clientWidth / UI.width) + "px";
+		dom.style.fontSize = baseFont * (clientWidth / uiWidth) + "px";
 	}
 }
 
