@@ -1,0 +1,15 @@
+@function fixpx($px) {
+    @return ($px/31.25)+em;
+}
+
+$gray: gray;
+$gray-dark: darken($gray, 10%) !default;
+$gray-darker: darken($gray, 20%) !default;
+$gray-darkest: darken($gray, 30%) !default;
+$gray-light: lighten($gray, 30%) !default;
+$gray-lighter: lighten($gray, 35%) !default;
+$gray-lightest: lighten($gray, 45%) !default;
+
+$radius: 1rem;
+
+$level: 30;
