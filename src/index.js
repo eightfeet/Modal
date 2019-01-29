@@ -18,7 +18,7 @@ const newModal = new Modal({
 			zIndex: 109
 		},
 		close: {
-			
+
 		},
 		modify: [
 			{
@@ -36,9 +36,9 @@ const newModal = new Modal({
 });
 
 newModal.show({
-	header:'<div style="position:relative; z-index: 90;background-color: yellow;">恭喜您</div>',
-	main: '获得',
-	footer: '啥东西'
+	// header:'<div style="position:relative; z-index: 90;background-color: yellow;">恭喜您</div>',
+	main: '获得'
+	// footer: '啥东西'
 });
 
 // module.exports = Modal;
