@@ -22,15 +22,9 @@ export default function (elements, config) {
 					<div class="${s.content}">
 						${doms || ''}
 						<div class="${s.modules}" ${content && `style="z-index:${zIndex}; ${inlineStyle(content)}"`}>
-							<div>
-								${operateElements.header || 'title'}
-							</div>
-							<div>
-								${operateElements.main || 'main'}
-							</div>
-							<div>
-								${operateElements.footer || 'footer'}
-							</div>
+							${operateElements.header && `<div class="${s.center}">${operateElements.header}</div>`}
+							${operateElements.main && `<div class="${s.left}">${operateElements.main}</div>`}
+							${operateElements.footer && `<div class="${s.center}">${operateElements.footer}</div>`}
 						</div>
 					</div>
 				</div>

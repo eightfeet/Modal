@@ -7,6 +7,7 @@ if (window.Promise === undefined) {
 import Modal from 'modules/SuccessModal';
 
 const newModal = new Modal({
+	zIndex: 100,
 	style: {
 		overlay: {
 			backgroundColor: 'rgba(0,0,0,0)'
@@ -14,7 +15,10 @@ const newModal = new Modal({
 		content: {
 			backgroundColor: 'rgba(100, 100, 100, 0.2)',
 			width: fixpx(700),
-			zIndex: 101
+			zIndex: 109
+		},
+		close: {
+			
 		},
 		modify: [
 			{
@@ -31,6 +35,10 @@ const newModal = new Modal({
 	}
 });
 
-newModal.show();
+newModal.show({
+	header:'<div style="position:relative; z-index: 90;background-color: yellow;">恭喜您</div>',
+	main: '获得',
+	footer: '啥东西'
+});
 
 // module.exports = Modal;
