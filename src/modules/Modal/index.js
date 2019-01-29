@@ -33,6 +33,7 @@ class Modal {
 	show = (elements) => {
 		const {id, ...other} = this.state;
 		createDom(template(elements, other), id)
+			.then(() => console.log('创建弹窗成功'))
 			.catch(err => console.log(err));
 	}
 }

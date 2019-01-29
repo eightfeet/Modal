@@ -4,31 +4,34 @@ import { inlineStyle } from '~/utils/tools';
 export default function (elements, config) {
 	const { style, zIndex, ...other } = config || {};
 	console.log('other', other);
-	const { overlay, content } = style || {};
+	const { overlay, content, modify } = style || {};
 	const operateElements = elements || {};
+	const operateModify = modify || [];
+
+	let doms= null;
+
+	for (let index = 0; index < operateModify.length; index++) {
+		const elementStyle = operateModify[index];
+		doms = (doms || '') + `<div class="${s.modify}" style="${inlineStyle(elementStyle)} z-index: ${zIndex + index * 2}">&nbsp;</div>`;
+	}
+
+	console.log('doms', doms);
+
 	return (
 		`<div class="modal____wrap ${s.modal}" style="z-index:${zIndex}">
 			<div class="${s.cove}" ${overlay && `style="${inlineStyle(overlay)}"`}>
 					<div class="${s.content}">
-						<div class="${s.modules} ${s.level3}" ${content && `style="${inlineStyle(content)}"`}>
+						${doms || ''}
+						<div class="${s.modules}" ${content && `style="z-index:${zIndex}; ${inlineStyle(content)}"`}>
 							<div>
-								${operateElements.header || ''}
+								${operateElements.header || 'title'}
 							</div>
 							<div>
-								${operateElements.main || ''}
+								${operateElements.main || 'main'}
 							</div>
 							<div>
-								${operateElements.footer || ''}
+								${operateElements.footer || 'footer'}
 							</div>
-						</div>
-						<div class="${s.modify} ${s.level1}" style="background-color:red; position: absolute">
-							asd
-						</div>
-						<div class="${s.modify} ${s.level2}">
-						</div>
-						<div class="${s.modify} ${s.level4}">
-						</div>
-						<div class="${s.modify} ${s.level5}">
 						</div>
 					</div>
 				</div>

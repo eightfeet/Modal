@@ -8,13 +8,25 @@ import Modal from 'modules/SuccessModal';
 const newModal = new Modal({
 	style: {
 		overlay: {
-			backgroundColor: 'rgba(0,0,0,0.8)'
+			backgroundColor: 'rgba(0,0,0,0)'
 		},
 		content: {
-			backgroundColor: '#eee',
-			height: '5em',
-			width: '95%'
-		}
+			backgroundColor: 'rgba(100, 100, 100, 0.2)',
+			width: '20em',
+			zIndex: 101
+		},
+		modify: [
+			{
+				backgroundColor: 'green',
+				width: '20%'
+			},
+			{
+				backgroundColor: 'red',
+				width: '150%',
+				left: '0',
+				top: '2em'
+			}
+		]
 	}
 });
 
