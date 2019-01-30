@@ -10,7 +10,7 @@ const newModal = new Modal({
 	zIndex: 100,
 	style: {
 		overlay: {
-			backgroundColor: 'rgba(0,0,0,0)'
+			backgroundColor: 'rgba(0,0,0,0.5)'
 		},
 		content: {
 			backgroundColor: 'rgba(100, 100, 100, 0.2)',
@@ -37,7 +37,7 @@ const newModal = new Modal({
 
 newModal.show({
 	// header:'<div style="position:relative; z-index: 90;background-color: yellow;">恭喜您</div>',
-	main: '获得'
+	main: '<div style="background-color: #fff">获得</div>'
 	// footer: '啥东西'
 });
 
