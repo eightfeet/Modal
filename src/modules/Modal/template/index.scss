@@ -16,6 +16,7 @@
         width: fixpx(600);
         left: 50%;
         transform: translate(-50%, -50%);
+        display: none;
     }
 
     .modify {
@@ -36,4 +37,55 @@
     .center {
         text-align: center;
     }
+
+    .animated {
+        animation-duration: 200ms;
+        animation-fill-mode: both;
+    }
+    
+    @keyframes zoomOut {
+        from {
+          opacity: 1;
+          transform-origin: -20% -20%;
+        }
+      
+        50% {
+          opacity: 0;
+          transform: scale3d(0.3, 0.3, 0.3);
+          transform-origin: -20% -20%;
+        }
+      
+        to {
+          opacity: 0;
+          transform-origin: -20% -20%;
+        }
+      }
+      
+      .zoomOut {
+        animation-name: zoomOut;
+      }
+
+      @keyframes zoomIn {
+        from {
+          opacity: 0;
+          transform-origin: -20% -20%;
+          transform: scale3d(0.3, 0.3, 0.3);
+        }
+      
+        50% {
+          opacity: 1;
+          transform-origin: -20% -20%;
+        }
+      }
+      
+      .zoomIn {
+        animation-name: zoomIn;
+        
+      }
+
+      .close {
+          position: absolute;
+          right: 0;
+          top: 0;
+      }
 }
