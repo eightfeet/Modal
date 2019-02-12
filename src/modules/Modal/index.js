@@ -33,11 +33,12 @@ class Modal {
 		return createDom(template(elements, other), id)
 			.then(() => console.log('创建弹窗成功'))
 			.then(() => new Promise( resolve => {
+				const element = document.querySelector(`.${s.content}`);
 				if (!Animation) {
+					element.style.display="block";
 					resolve();
 					return;
 				}
-				const element = document.querySelector(`.${s.content}`);
 				element.classList.add(s.animated);
 				window.setTimeout(() => {
 					element.classList.add(s.zoomIn);

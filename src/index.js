@@ -8,7 +8,7 @@ import Modal from 'modules/SuccessModal';
 
 const newModal = new Modal({
 	zIndex: 100, // modal的层级
-	Animation: true,
+	// Animation: true,
 	style: {
 		overlay: {
 			backgroundColor: 'rgba(0,0,0,0.5)'
@@ -48,7 +48,7 @@ const btn = document.getElementById('asd');
 
 btn.onclick = () => newModal.show({
 	header:'<div style="position:relative; z-index: 90;background-color: yellow;">恭喜您</div>',
-	main: '<div style="background-color: #fff">获得</div>',
+	main: '<div style="background-color: #fff; height: 300px">获得</div>',
 	footer: `<div style="background-color: white" id="close">啥东西</div>`
 }).then(() => {
 	document.getElementById('close').onclick = () => newModal.hide();
