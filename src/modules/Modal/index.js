@@ -27,6 +27,11 @@ const closeAnimation = function(element, callback){
 };
 
 class Modal {
+	/**
+	 *Creates an instance of Modal.
+	 * @param { Object } data
+	 * @memberof Modal
+	 */
 	constructor(data) {
 		const stamp = (new Date()).getTime();
 		const {
@@ -46,17 +51,22 @@ class Modal {
 			maxWidth: maxWidth || '90%', // 最大宽度
 			maxHeight: maxHeight || '80%', // 最大高度
 			zIndex: zIndex || 100, // 层级
-			closable: closable === true, // 可关闭
+			closable: closable === true, // 是否自带关闭按钮
 			style: style || null, // 基础样式
-			Animation: !!Animation
+			Animation: Animation === true // 是否开启弹窗动画
 		};
 	}
-	
+	/**
+	 * @description 创建弹窗
+	 * @param {Object} elements {head: htmlDom, main: htmlDom, footer: htmlDom}
+	 * @param {Boolean} noRemoval 是否移除弹窗，noRemoval=true时点击关闭按钮仅隐藏当前弹窗而不移除当前弹窗Dom
+	 * @memberof Modal
+	 */
 	create = (elements, noRemoval) => {
 		const {id, Animation, ...other} = this.state;
 		const modalElement = document.getElementById(id);
 		if (modalElement) {
-			this.visible();
+			this.show();
 			console.warn('已创建modal时 modal.create === modal.show');
 			return Promise.resolve();
 		}
@@ -81,8 +91,12 @@ class Modal {
 			})
 			.catch(err => console.log(err));
 	}
+	/**
+	 *
+	 * @description 移除弹窗
+	 * @memberof Modal
+	 */
 	remove = () => new Promise((resolve) => {
-		console.log(0, this.state);
 		if (!this.state.Animation) {
 			resolve();
 			return;
@@ -91,7 +105,6 @@ class Modal {
 		closeAnimation(element, resolve);
 	})
 		.then((element) => element ? onceAnimationEnd(element) : null)
-		.then(() => console.log('动画结束'))
 		.then(() => removeDom(this.state.id));
 
 	/**
@@ -99,14 +112,14 @@ class Modal {
 	 * @description 显示弹窗
 	 * @memberof Modal
 	 */
-	visible = () => {
+	show = () => {
 		const {id, Animation} = this.state;
 		const modalElement = document.getElementById(id);
 		return new Promise((resolve, reject) => {
 			const wrapElement = document.querySelector(`.${s.cove}`);
 			const element = document.querySelector(`.${s.content}`);
 			if (!modalElement) {
-				reject('未创建modal');
+				reject('未创建或者已移除modal');
 				return;
 			}
 			if (!Animation) {
@@ -123,7 +136,7 @@ class Modal {
 	}
 	/**
 	 *
-	 * @description 显示弹窗
+	 * @description 隐藏弹窗
 	 * @memberof Modal
 	 */
 	unvisible = () => {
@@ -145,9 +158,10 @@ class Modal {
 				modalElement.style.display = 'none';
 			});
 	}
-	show = () => this.visible()
+	
 	/**
-	 * @param {Boolean} noRemoval noRemoval=true时仅隐藏当前弹窗而不移除当前弹窗Dom
+	 * @description 隐藏或移除弹窗
+	 * @param {Boolean} noRemoval 是否移除弹窗，noRemoval=true时仅隐藏当前弹窗而不移除当前弹窗Dom
 	 * @memberof Modal
 	 */
 	hide = (noRemoval) => {

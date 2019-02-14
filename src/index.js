@@ -71,6 +71,7 @@ btn.onclick = () => newModal.create({
 	header:'<div style="position:relative; z-index: 90;background-color: yellow;">头部</div>',
 	main: `<div style="background-color: #fff;">
 				这是一段内容这是一段内容
+				<input type="text" />
 			</div>`,
 	footer: `<div style="background-color: white">
 				<button id="close" style="border:1px solid #aaa; padding: 1em">确定</button>
