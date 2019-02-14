@@ -65,8 +65,9 @@ const newModal = new Modal({
 });
 
 const btn = document.getElementById('example');
+const btnshow = document.getElementById('exampleshow');
 
-btn.onclick = () => newModal.show({
+btn.onclick = () => newModal.create({
 	header:'<div style="position:relative; z-index: 90;background-color: yellow;">头部</div>',
 	main: `<div style="background-color: #fff;">
 				这是一段内容这是一段内容
@@ -80,5 +81,5 @@ btn.onclick = () => newModal.show({
 	document.getElementById('close').onclick = () => newModal.hide();
 });
 
-
+btnshow.onclick = () => newModal.show();
 // module.exports = Modal;

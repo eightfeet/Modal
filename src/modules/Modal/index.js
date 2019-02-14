@@ -3,6 +3,29 @@ import { onceAnimationEnd } from 'web-animation-club';
 import s from './template/index.scss';
 import { createDom, removeDom } from '~/utils/htmlFactory.js';
 
+const openAnimation = function(element, wrapElement, callback){
+	element.classList.add(s.animated);
+	window.setTimeout(() => {
+		element.classList.remove(s.zoomIn);
+		element.classList.remove(s.zoomOut);
+		element.classList.add(s.zoomIn);
+		wrapElement.classList.add(s.fadeIn);
+		element.style.display="block";
+		wrapElement.style.display="block";
+		callback(element);
+	});
+};
+
+const closeAnimation = function(element, callback){
+	element.classList.add(s.animated);
+	window.setTimeout(() => {
+		element.classList.remove(s.zoomIn);
+		element.classList.remove(s.zoomOut);
+		element.classList.add(s.zoomOut);
+		callback(element);
+	});
+};
+
 class Modal {
 	constructor(data) {
 		const stamp = (new Date()).getTime();
@@ -28,8 +51,13 @@ class Modal {
 			Animation: !!Animation
 		};
 	}
-	show = (elements) => {
+	
+	create = (elements) => {
 		const {id, Animation, ...other} = this.state;
+		const modalElement = document.getElementById(id);
+		if (modalElement) {
+			throw '已创建modal';
+		}
 		return createDom(template(elements, other), id)
 			.then(() => console.log('创建弹窗成功'))
 			.then(() => new Promise( resolve => {
@@ -41,14 +69,7 @@ class Modal {
 					resolve();
 					return;
 				}
-				element.classList.add(s.animated);
-				window.setTimeout(() => {
-					element.classList.add(s.zoomIn);
-					wrapElement.classList.add(s.fadeIn);
-					element.style.display="block";
-					wrapElement.style.display="block";
-					resolve(element);
-				});
+				openAnimation(element, wrapElement, resolve);
 			}))
 			.then((element) => element ? onceAnimationEnd(element) : null)
 			.then(() => console.log('动画结束'))
@@ -58,7 +79,7 @@ class Modal {
 			})
 			.catch(err => console.log(err));
 	}
-	hide = () => new Promise((resolve) => {
+	remove = () => new Promise((resolve) => {
 		console.log(0, this.state);
 		if (!this.state.Animation) {
 			console.log(1);
@@ -66,17 +87,53 @@ class Modal {
 			return;
 		}
 		const element = document.querySelector(`.${s.content}`);
-		element.classList.add(s.animated);
-		window.setTimeout(() => {
-			console.log(2);
-			element.classList.remove(s.zoomIn);
-			element.classList.add(s.zoomOut);
-			resolve(element);
-		});
+		closeAnimation(element, resolve);
 	})
 		.then((element) => element ? onceAnimationEnd(element) : null)
 		.then(() => console.log('动画结束'))
 		.then(() => removeDom(this.state.id));
+
+	visible = () => {
+		const {id, Animation} = this.state;
+		const modalElement = document.getElementById(id);
+		return new Promise((resolve, reject) => {
+			const wrapElement = document.querySelector(`.${s.cove}`);
+			const element = document.querySelector(`.${s.content}`);
+			if (!modalElement) {
+				reject('未创建modal');
+				return;
+			}
+			if (!Animation) {
+				element.style.display="block";
+				wrapElement.style.display="block";
+				resolve();
+				return;
+			}
+			openAnimation(element, wrapElement, resolve);
+		})
+			.then(() => {
+				modalElement.style.display = 'block';
+			});
+	}
+	unvisible = () => {
+		const {id, Animation} = this.state;
+		const modalElement = document.getElementById(id);
+		return new Promise((resolve, reject) => {
+			if (!modalElement) {
+				reject('未创建modal');
+				return;
+			}
+			if (!Animation) {
+				resolve();
+				return;
+			}
+			const element = document.querySelector(`.${s.content}`);
+			closeAnimation(element, resolve);
+		})
+			.then(() => {
+				modalElement.style.display = 'none';
+			});
+	}
 }
 
 export default Modal;
