@@ -33,16 +33,20 @@ class Modal {
 		return createDom(template(elements, other), id)
 			.then(() => console.log('创建弹窗成功'))
 			.then(() => new Promise( resolve => {
+				const wrapElement = document.querySelector(`.${s.cove}`);
 				const element = document.querySelector(`.${s.content}`);
 				if (!Animation) {
 					element.style.display="block";
+					wrapElement.style.display="block";
 					resolve();
 					return;
 				}
 				element.classList.add(s.animated);
 				window.setTimeout(() => {
 					element.classList.add(s.zoomIn);
+					wrapElement.classList.add(s.fadeIn);
 					element.style.display="block";
+					wrapElement.style.display="block";
 					resolve(element);
 				});
 			}))
@@ -69,7 +73,10 @@ class Modal {
 			element.classList.add(s.zoomOut);
 			resolve(element);
 		});
-	}).then(() => removeDom(this.state.id));
+	})
+		.then((element) => element ? onceAnimationEnd(element) : null)
+		.then(() => console.log('动画结束'))
+		.then(() => removeDom(this.state.id));
 }
 
 export default Modal;

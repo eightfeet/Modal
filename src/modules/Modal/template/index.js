@@ -22,8 +22,8 @@ export default function (elements, config) {
 							${operateElements.header ? `<div class="${s.center}">${operateElements.header}</div>` : ''}
 							${operateElements.main ? `<div class="${s.left}">${operateElements.main}</div>` : ''}
 							${operateElements.footer ? `<div class="${s.center}">${operateElements.footer}</div>` : ''}
-							<div class=${s.close} style="${inlineStyle(close)} z-index: ${zIndex + operateModify.length * 2}">123</div>
 						</div>
+						${close ? `<div class=${s.close} style="${inlineStyle(close)} z-index: ${zIndex + operateModify.length * 2}"></div>` : ''}
 					</div>
 				</div>
 			</div>
