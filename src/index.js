@@ -77,7 +77,7 @@ btn.onclick = () => newModal.create({
 				<br>
 				脚部
 			</div>`
-}).then(() => {
+}, true).then(() => {
 	document.getElementById('close').onclick = () => newModal.hide();
 });
 

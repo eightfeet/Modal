@@ -52,11 +52,13 @@ class Modal {
 		};
 	}
 	
-	create = (elements) => {
+	create = (elements, noRemoval) => {
 		const {id, Animation, ...other} = this.state;
 		const modalElement = document.getElementById(id);
 		if (modalElement) {
-			throw '已创建modal';
+			this.visible();
+			console.warn('已创建modal时 modal.create === modal.show');
+			return Promise.resolve();
 		}
 		return createDom(template(elements, other), id)
 			.then(() => console.log('创建弹窗成功'))
@@ -75,14 +77,13 @@ class Modal {
 			.then(() => console.log('动画结束'))
 			.then(() => {
 				const element = document.querySelector(`.${s.close}`);
-				element.onclick = () => this.hide();
+				element.onclick = () => this.hide(noRemoval);
 			})
 			.catch(err => console.log(err));
 	}
 	remove = () => new Promise((resolve) => {
 		console.log(0, this.state);
 		if (!this.state.Animation) {
-			console.log(1);
 			resolve();
 			return;
 		}
@@ -93,6 +94,11 @@ class Modal {
 		.then(() => console.log('动画结束'))
 		.then(() => removeDom(this.state.id));
 
+	/**
+	 *
+	 * @description 显示弹窗
+	 * @memberof Modal
+	 */
 	visible = () => {
 		const {id, Animation} = this.state;
 		const modalElement = document.getElementById(id);
@@ -115,6 +121,11 @@ class Modal {
 				modalElement.style.display = 'block';
 			});
 	}
+	/**
+	 *
+	 * @description 显示弹窗
+	 * @memberof Modal
+	 */
 	unvisible = () => {
 		const {id, Animation} = this.state;
 		const modalElement = document.getElementById(id);
@@ -133,6 +144,17 @@ class Modal {
 			.then(() => {
 				modalElement.style.display = 'none';
 			});
+	}
+	show = () => this.visible()
+	/**
+	 * @param {Boolean} noRemoval noRemoval=true时仅隐藏当前弹窗而不移除当前弹窗Dom
+	 * @memberof Modal
+	 */
+	hide = (noRemoval) => {
+		if (noRemoval === true) {
+			return this.unvisible();
+		}
+		return this.remove();
 	}
 }
 
