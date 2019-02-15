@@ -1,9 +1,9 @@
 @import "./variables.scss";
-@import "./animate/zooming_exits/zoomOut.scss";
+// @import "./animate/zooming_exits/zoomOut.scss";
 
-@import "./animate/base";
+// @import "./animate/base";
 /* structural elements 结构元素 */
-.lottery____wrap, .modal____wrap {
+.modal____wrap {
   h1,
     h2,
     h3,
@@ -70,20 +70,12 @@
   input[type="text"],
   input[type="tel"],
   input[type="number"] {
-    border-radius: $radius;
     display: block;
     width: 100%;
-    padding: 0 fixpx(18);
     box-sizing: border-box;
-    border: 1px solid #959595;
-    height: fixpx(100);
-    font-size: fixpx(24);
   }
   select {
-    height: fixpx(84);
-    font-size: fixpx(24);
     background-color: transparent;
     border: none;
-    border: 1px solid $gray-light;
   }
 }
