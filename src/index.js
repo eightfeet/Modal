@@ -7,15 +7,19 @@ if (window.Promise === undefined) {
 import Modal from 'modules/SuccessModal';
 
 const newModal = new Modal({
-	// zIndex: 100, // modal的层级默认100
-	Animation: true, // 默认false
-	style: {
+	// id: '2222222', // 模板节点id 不传可自动生成id
+	// zIndex: 100, // modal的层级关系，默认100
+	// Animation: false, // 启用动画 默认true
+	// closable: false, // 可关闭 默认true
+	// shouldCloseOnOverlayClick: true, // 点击背景层关闭弹窗 默认false
+	style: { // 定义modal样式 {overlay: 覆盖层, content: 内容区, close: 关闭按钮}
 		overlay: {
 			backgroundColor: 'rgba(0,0,0,0.5)'
 		},
 		content: {
 			backgroundColor: 'rgba(100, 100, 100, 0.2)',
-			width: fixpx(700),
+			width: fixpx(600),
+			// padding: '120px',
 			// 设置内容的层级关系
 			zIndex: 107
 		},

@@ -14,7 +14,6 @@
     .content {
         position: absolute;
         top: 40%;
-        width: fixpx(600);
         left: 50%;
         transform: translate(-50%, -50%);
         display: none;
@@ -27,6 +26,7 @@
 
     .modules {
         max-width: 95%;
+        width: fixpx(600);
         background-color: #fff;
         margin: 0 auto;
         position: relative;

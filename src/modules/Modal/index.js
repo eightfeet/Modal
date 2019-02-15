@@ -37,8 +37,6 @@ class Modal {
 		const {
 			id,
 			shouldCloseOnOverlayClick,
-			maxWidth,
-			maxHeight,
 			zIndex,
 			closable,
 			style,
@@ -48,12 +46,10 @@ class Modal {
 		this.state = {
 			id: id || `modules${stamp}`, // moduleId
 			shouldCloseOnOverlayClick: shouldCloseOnOverlayClick === true, // 点击背景层关闭弹窗
-			maxWidth: maxWidth || '90%', // 最大宽度
-			maxHeight: maxHeight || '80%', // 最大高度
 			zIndex: zIndex || 100, // 层级
-			closable: closable === true, // 是否自带关闭按钮
+			closable: closable === false ? false : true, // 是否自带关闭按钮
 			style: style || null, // 基础样式
-			Animation: Animation === true // 是否开启弹窗动画
+			Animation: Animation === false ? false : true // 是否开启弹窗动画
 		};
 	}
 	/**
@@ -63,7 +59,7 @@ class Modal {
 	 * @memberof Modal
 	 */
 	create = (elements, noRemoval) => {
-		const {id, Animation, ...other} = this.state;
+		const {id, Animation, shouldCloseOnOverlayClick, ...other} = this.state;
 		const modalElement = document.getElementById(id);
 		if (modalElement) {
 			this.show();
@@ -86,8 +82,16 @@ class Modal {
 			.then((element) => element ? onceAnimationEnd(element) : null)
 			.then(() => console.log('动画结束'))
 			.then(() => {
-				const element = document.querySelector(`.${s.close}`);
-				element.onclick = () => this.hide(noRemoval);
+				const elementClose = document.querySelector(`.${s.close}`);
+				const wrapElement = document.querySelector(`.${s.cove}`);
+				// const element = document.querySelector(`.${s.modules}`);
+				if (shouldCloseOnOverlayClick === true) {
+					// element.onclick = e => e.stopPropagation(); 是否阻止事件冒泡（待定）
+					wrapElement.onclick = () => {
+						this.hide(noRemoval);
+					};
+				}
+				elementClose.onclick = () => this.hide(noRemoval);
 			})
 			.catch(err => console.log(err));
 	}
