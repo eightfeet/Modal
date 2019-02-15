@@ -82,7 +82,7 @@ module.exports = (env, argv) => ({
 	entry: './src/index.js',
 	context: path.resolve(__dirname),
 	output: {
-		library: '___Lotterys___',
+		library: '___Modal___',
 		libraryTarget: 'umd',
 		path: path.resolve(__dirname, 'dist'),
 		filename: 'lotterys.js',
