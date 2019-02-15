@@ -1,8 +1,8 @@
 {
-  "name": "@byhealth/points",
+  "name": "@eightfeet/modal",
   "version": "1.0.0",
   "description": "",
-  "main": "./dist/points.js",
+  "main": "./dist/modal.js",
   "files": [
     "dist"
   ],
@@ -12,7 +12,7 @@
     "dev": "webpack-dev-server --mode development --inline --hot",
     "prepublish": "rm -rf ./dist && yarn build"
   },
-  "author": "",
+  "author": "eightfeet",
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^9.1.0",

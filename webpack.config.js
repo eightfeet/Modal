@@ -85,7 +85,7 @@ module.exports = (env, argv) => ({
 		library: '___Modal___',
 		libraryTarget: 'umd',
 		path: path.resolve(__dirname, 'dist'),
-		filename: 'lotterys.js',
+		filename: 'modal.js',
 		publicPath: argv.mode === 'development' ? '/' : cdn
 	},
 	module: {
