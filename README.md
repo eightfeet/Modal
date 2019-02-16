@@ -8,7 +8,7 @@ var newModal = new Modal({
         Animation: false, // 启用动画 默认true
         closable: false, // 可关闭 默认true
         shouldCloseOnOverlayClick: true, // 点击背景层关闭弹窗 默认false
-        style: { // 定义modal样式 {overlay: 覆盖层, content: 内容区, close: 关闭按钮}
+        style: { // 定义modal样式 {overlay: 覆盖层, content: 内容区, close: 关闭按钮} 
             overlay: {
                 backgroundColor: 'rgba(0,0,0,0.5)'
             },
