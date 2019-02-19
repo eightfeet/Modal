@@ -1,30 +1,7 @@
 import template from './template/index';
-import { onceAnimationEnd } from 'web-animation-club';
+import { onceTransitionEnd } from 'web-animation-club';
 import s from './template/index.scss';
 import { createDom, removeDom } from '~/utils/htmlFactory.js';
-
-const openAnimation = function(element, wrapElement, callback){
-	element.classList.add(s.animated);
-	window.setTimeout(() => {
-		element.classList.remove(s.zoomIn);
-		element.classList.remove(s.zoomOut);
-		element.classList.add(s.zoomIn);
-		wrapElement.classList.add(s.fadeIn);
-		element.style.display="block";
-		wrapElement.style.display="block";
-		callback(element);
-	});
-};
-
-const closeAnimation = function(element, callback){
-	element.classList.add(s.animated);
-	window.setTimeout(() => {
-		element.classList.remove(s.zoomIn);
-		element.classList.remove(s.zoomOut);
-		element.classList.add(s.zoomOut);
-		callback(element);
-	});
-};
 
 class Modal {
 	/**
@@ -59,7 +36,7 @@ class Modal {
 	 * @memberof Modal
 	 */
 	create = (elements, noRemoval) => {
-		const {id, Animation, shouldCloseOnOverlayClick, ...other} = this.state;
+		const {id, shouldCloseOnOverlayClick, ...other} = this.state;
 		const modalElement = document.getElementById(id);
 		if (modalElement) {
 			this.show();
@@ -67,21 +44,8 @@ class Modal {
 			return Promise.resolve();
 		}
 		return createDom(template(elements, other), id)
-			.then(() => console.log('创建弹窗成功'))
-			.then(() => new Promise( resolve => {
-				const wrapElement = document.querySelector(`.${s.cove}`);
-				const element = document.querySelector(`.${s.content}`);
-				if (!Animation) {
-					element.style.display="block";
-					wrapElement.style.display="block";
-					resolve();
-					return;
-				}
-				openAnimation(element, wrapElement, resolve);
-			}))
-			.then((element) => element ? onceAnimationEnd(element) : null)
-			.then(() => console.log('动画结束'))
 			.then(() => {
+				console.log('s.coveshow', s.coveshow);
 				const elementClose = document.querySelector(`.${s.close}`);
 				const wrapElement = document.querySelector(`.${s.cove}`);
 				// const element = document.querySelector(`.${s.modules}`);
@@ -92,8 +56,14 @@ class Modal {
 					};
 				}
 				elementClose.onclick = () => this.hide(noRemoval);
+				return new Promise(resolve => {
+					window.setTimeout(() => {
+						wrapElement.classList.add(s.coveshow);
+						resolve(wrapElement);
+					}, 10);
+				});
 			})
-			.catch(err => console.log(err));
+			.then(wrapElement => onceTransitionEnd(wrapElement));
 	}
 	/**
 	 *
@@ -101,14 +71,11 @@ class Modal {
 	 * @memberof Modal
 	 */
 	remove = () => new Promise((resolve) => {
-		if (!this.state.Animation) {
-			resolve();
-			return;
-		}
-		const element = document.querySelector(`.${s.content}`);
-		closeAnimation(element, resolve);
+		const wrapElement = document.querySelector(`.${s.cove}`);
+		wrapElement.classList.remove(s.coveshow);
+		resolve(wrapElement);
 	})
-		.then((element) => element ? onceAnimationEnd(element) : null)
+		.then(wrapElement => onceTransitionEnd(wrapElement))
 		.then(() => removeDom(this.state.id));
 
 	/**
@@ -117,26 +84,20 @@ class Modal {
 	 * @memberof Modal
 	 */
 	show = () => {
-		const {id, Animation} = this.state;
+		const {id} = this.state;
 		const modalElement = document.getElementById(id);
 		return new Promise((resolve, reject) => {
 			const wrapElement = document.querySelector(`.${s.cove}`);
-			const element = document.querySelector(`.${s.content}`);
 			if (!modalElement) {
 				reject('未创建或者已移除modal');
 				return;
 			}
-			if (!Animation) {
-				element.style.display="block";
-				wrapElement.style.display="block";
+			modalElement.style.display = 'block';
+			window.setTimeout(() => {
+				wrapElement.classList.add(s.coveshow);
 				resolve();
-				return;
-			}
-			openAnimation(element, wrapElement, resolve);
-		})
-			.then(() => {
-				modalElement.style.display = 'block';
-			});
+			}, 10);
+		});
 	}
 	/**
 	 *
@@ -144,23 +105,19 @@ class Modal {
 	 * @memberof Modal
 	 */
 	unvisible = () => {
-		const {id, Animation} = this.state;
+		const {id} = this.state;
 		const modalElement = document.getElementById(id);
 		return new Promise((resolve, reject) => {
+			const wrapElement = document.querySelector(`.${s.cove}`);
 			if (!modalElement) {
 				reject('未创建modal');
 				return;
 			}
-			if (!Animation) {
-				resolve();
-				return;
-			}
-			const element = document.querySelector(`.${s.content}`);
-			closeAnimation(element, resolve);
+			wrapElement.classList.remove(s.coveshow);
+			resolve(wrapElement);
 		})
-			.then(() => {
-				modalElement.style.display = 'none';
-			});
+			.then(wrapElement => onceTransitionEnd(wrapElement))
+			.then(() => modalElement.style.display = 'none');
 	}
 	
 	/**
