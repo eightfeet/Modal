@@ -54,7 +54,9 @@ class Modal {
 						this.hide(noRemoval);
 					};
 				}
-				elementClose.onclick = () => this.hide(noRemoval);
+				if (elementClose) {
+					elementClose.onclick = () => this.hide(noRemoval);
+				}
 				return new Promise(resolve => {
 					window.setTimeout(() => {
 						wrapElement.classList.add(s.coveshow);
