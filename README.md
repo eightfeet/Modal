@@ -3,7 +3,7 @@
 import Modal from '@eightfeet/modal';
 
 var newModal = new Modal({
-        id: 'ModalId', // 模板节点id 不传可自动生成id
+        id: 'ModalId', // modalId 不传自动生成 modal + 时间戳 + 100以内的随机数
         zIndex: 100, // modal的层级关系，默认100
         Animation: false, // 启用动画 默认true
         closable: false, // 可关闭 默认true

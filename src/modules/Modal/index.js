@@ -21,7 +21,7 @@ class Modal {
 		} = data || {};
 
 		this.state = {
-			id: id || `modules${stamp}`, // moduleId
+			id: id || `modal${stamp}-${window.Math.floor(window.Math.random()*100)}`, // modalId 不传自动生成 modal + 时间戳 + 100以内的随机数
 			shouldCloseOnOverlayClick: shouldCloseOnOverlayClick === true, // 点击背景层关闭弹窗
 			zIndex: zIndex || 100, // 层级
 			closable: closable === false ? false : true, // 是否自带关闭按钮
@@ -37,7 +37,7 @@ class Modal {
 	 */
 	create = (elements, noRemoval) => {
 		const {id, shouldCloseOnOverlayClick, ...other} = this.state;
-		const modalElement = document.getElementById(id);
+		let modalElement = document.getElementById(id);
 		if (modalElement) {
 			this.show();
 			console.warn('已创建modal时 modal.create === modal.show');
@@ -45,10 +45,9 @@ class Modal {
 		}
 		return createDom(template(elements, other), id)
 			.then(() => {
-				console.log('s.coveshow', s.coveshow);
-				const elementClose = document.querySelector(`.${s.close}`);
-				const wrapElement = document.querySelector(`.${s.cove}`);
-				// const element = document.querySelector(`.${s.modules}`);
+				modalElement = document.getElementById(id);
+				const elementClose = modalElement.querySelector(`.${s.close}`);
+				const wrapElement = modalElement.querySelector(`.${s.cove}`);
 				if (shouldCloseOnOverlayClick === true) {
 					// element.onclick = e => e.stopPropagation(); 是否阻止事件冒泡（待定）
 					wrapElement.onclick = () => {
@@ -71,7 +70,8 @@ class Modal {
 	 * @memberof Modal
 	 */
 	remove = () => new Promise((resolve) => {
-		const wrapElement = document.querySelector(`.${s.cove}`);
+		const modalElement = document.getElementById(this.state.id);
+		const wrapElement = modalElement.querySelector(`.${s.cove}`);
 		wrapElement.classList.remove(s.coveshow);
 		resolve(wrapElement);
 	})
@@ -87,7 +87,7 @@ class Modal {
 		const {id} = this.state;
 		const modalElement = document.getElementById(id);
 		return new Promise((resolve, reject) => {
-			const wrapElement = document.querySelector(`.${s.cove}`);
+			const wrapElement = modalElement.querySelector(`.${s.cove}`);
 			if (!modalElement) {
 				reject('未创建或者已移除modal');
 				return;
@@ -108,7 +108,7 @@ class Modal {
 		const {id} = this.state;
 		const modalElement = document.getElementById(id);
 		return new Promise((resolve, reject) => {
-			const wrapElement = document.querySelector(`.${s.cove}`);
+			const wrapElement = modalElement.querySelector(`.${s.cove}`);
 			if (!modalElement) {
 				reject('未创建modal');
 				return;
