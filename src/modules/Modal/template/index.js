@@ -14,8 +14,8 @@ export default function (elements, config) {
 	}
 
 	return (
-		`<div class="modal____wrap ${s.modal}" style="z-index:${zIndex}">
-			<div class="${s.cove}" ${overlay && `style="${inlineStyle(overlay)}"`}>
+		`<div class="modal____wrap ${s.modal}">
+			<div class="${s.cove}" ${overlay && `style="z-index:${zIndex}; ${inlineStyle(overlay)}"`}>
 					<div class="${s.content}">
 						${doms || ''}
 						<div class="${s.modules}" ${content && `style="z-index:${zIndex}; box-sizing: border-box; ${inlineStyle(content)}"`}>
