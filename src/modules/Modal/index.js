@@ -61,7 +61,7 @@ class Modal {
 					window.setTimeout(() => {
 						wrapElement.classList.add(s.coveshow);
 						resolve(wrapElement);
-					}, 10);
+					}, 100);
 				});
 			})
 			.then(wrapElement => onceTransitionEnd(wrapElement));
@@ -98,7 +98,7 @@ class Modal {
 			window.setTimeout(() => {
 				wrapElement.classList.add(s.coveshow);
 				resolve();
-			}, 10);
+			}, 100);
 		});
 	}
 	/**
