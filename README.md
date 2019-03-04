@@ -1,4 +1,4 @@
-###case
+### case
 ```javascript
 import Modal from '@eightfeet/modal';
 
