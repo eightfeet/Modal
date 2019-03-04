@@ -1,5 +1,5 @@
 import template from './template/index';
-import { onceTransitionEnd } from 'web-animation-club';
+import { onceTransitionEnd } from '~/utils/web-animation-club.js';
 import s from './template/index.scss';
 import { createDom, removeDom } from '~/utils/htmlFactory.js';
 
