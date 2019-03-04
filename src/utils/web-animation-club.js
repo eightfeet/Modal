@@ -8,7 +8,7 @@ function recursiveAnimationFrame(frames, callback) {
 	callback();
 }
   
-export function setCssEndEvent(element, type, { tolerance = 0, propertyName } = {}) {
+export function setCssEndEvent(element, type) {
 	return new Promise((resolve) => {
 		if (!element) {
 			resolve(false);
@@ -16,18 +16,11 @@ export function setCssEndEvent(element, type, { tolerance = 0, propertyName } = 
 		}
 		let eventName = null;
 		const capitalized = type.charAt(0).toUpperCase() + type.slice(1);
-		let run = 0;
 		function end(event) {
 			const target = event.srcElement || event.target;
 			if (target === element) {
-				if (run >= tolerance) {
-					if (propertyName && propertyName !== event.propertyName) {
-						return;
-					}
-					element.removeEventListener(eventName, end);
-					resolve(event);
-				}
-				run += 1;
+				element.removeEventListener(eventName, end);
+				resolve(event);
 			}
 		}
 		if (element.style[`Webkit${capitalized}`] !== undefined) {
