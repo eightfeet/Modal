@@ -1,12 +1,12 @@
-function recursiveAnimationFrame(frames, callback) {
-	if (frames && Number.isInteger(frames) && frames > 0) {
-		window.requestAnimationFrame(() => {
-			recursiveAnimationFrame(frames - 1, callback);
-		});
-		return;
-	}
-	callback();
-}
+// function recursiveAnimationFrame(frames, callback) {
+// 	if (frames && Number.isInteger(frames) && frames > 0) {
+// 		window.requestAnimationFrame(() => {
+// 			recursiveAnimationFrame(frames - 1, callback);
+// 		});
+// 		return;
+// 	}
+// 	callback();
+// }
   
 export function setCssEndEvent(element, type) {
 	return new Promise((resolve) => {
@@ -36,25 +36,25 @@ export function setCssEndEvent(element, type) {
 	});
 }
   
-export function beforeCssLayout(callback) {
-	window.requestAnimationFrame(callback);
-}
+// export function beforeCssLayout(callback) {
+// 	window.requestAnimationFrame(callback);
+// }
   
-export function beforeNextCssLayout(callback) {
-	window.requestAnimationFrame(() => {
-		window.requestAnimationFrame(callback);
-	});
-}
+// export function beforeNextCssLayout(callback) {
+// 	window.requestAnimationFrame(() => {
+// 		window.requestAnimationFrame(callback);
+// 	});
+// }
   
-export function beforeFutureCssLayout(frames, callback) {
-	recursiveAnimationFrame(frames + 1, callback);
-}
+// export function beforeFutureCssLayout(frames, callback) {
+// 	recursiveAnimationFrame(frames + 1, callback);
+// }
   
-export function onceNextCssLayout() {
-	return new Promise((resolve) => {
-		beforeNextCssLayout(resolve);
-	});
-}
+// export function onceNextCssLayout() {
+// 	return new Promise((resolve) => {
+// 		beforeNextCssLayout(resolve);
+// 	});
+// }
   
 export function onceTransitionEnd(element, options = {}) {
 	return new Promise((resolve) => {
@@ -62,9 +62,10 @@ export function onceTransitionEnd(element, options = {}) {
 	});
 }
   
-export function onceAnimationEnd(element, options = {}) {
-	return new Promise((resolve) => {
-		setCssEndEvent(element, 'animation', options).then(resolve);
-	});
-}
+// export function onceAnimationEnd(element, options = {}) {
+// console.log(666555);
+// 	return new Promise((resolve) => {
+// 		setCssEndEvent(element, 'animation', options).then(resolve);
+// 	});
+// }
   
