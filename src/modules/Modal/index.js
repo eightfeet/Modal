@@ -16,8 +16,7 @@ class Modal {
 			shouldCloseOnOverlayClick,
 			zIndex,
 			closable,
-			style,
-			Animation
+			style
 		} = data || {};
 
 		this.state = {
@@ -25,8 +24,7 @@ class Modal {
 			shouldCloseOnOverlayClick: shouldCloseOnOverlayClick === true, // 点击背景层关闭弹窗
 			zIndex: zIndex || 100, // 层级
 			closable: closable === false ? false : true, // 是否自带关闭按钮
-			style: style || null, // 基础样式
-			Animation: Animation === false ? false : true // 是否开启弹窗动画
+			style: style || null // 基础样式
 		};
 	}
 	/**

@@ -1,6 +1,14 @@
 import s from './index.scss';
 import { inlineStyle } from '~/utils/tools';
 
+/**
+ *
+ *
+ * @export
+ * @param {Object} elements {head: htmlDom, main: htmlDom, footer: htmlDom}
+ * @param {*} config {zIndex, closable, style}
+ * @returns
+ */
 export default function (elements, config) {
 	const { style, zIndex, closable } = config || {};
 	const { overlay, content, modify, close } = style || {};
