@@ -17,7 +17,6 @@ class Modal {
 			zIndex,
 			closable,
 			style,
-			Animation,
 			onCancel
 		} = data || {};
 
@@ -27,8 +26,7 @@ class Modal {
 			zIndex: zIndex || 100, // 层级
 			closable: closable === false ? false : true, // 是否自带关闭按钮
 			style: style || null, // 基础样式
-			onCancel,
-			Animation: Animation === false ? false : true // 是否开启弹窗动画
+			onCancel
 		};
 	}
 	/**
