@@ -17,7 +17,8 @@ class Modal {
 			zIndex,
 			closable,
 			style,
-			Animation
+			Animation,
+			onCancel
 		} = data || {};
 
 		this.state = {
@@ -26,6 +27,7 @@ class Modal {
 			zIndex: zIndex || 100, // 层级
 			closable: closable === false ? false : true, // 是否自带关闭按钮
 			style: style || null, // 基础样式
+			onCancel,
 			Animation: Animation === false ? false : true // 是否开启弹窗动画
 		};
 	}
@@ -36,7 +38,7 @@ class Modal {
 	 * @memberof Modal
 	 */
 	create = (elements, noRemoval) => {
-		const {id, shouldCloseOnOverlayClick, ...other} = this.state;
+		const {id, shouldCloseOnOverlayClick, onCancel, ...other} = this.state;
 		let modalElement = document.getElementById(id);
 		if (modalElement) {
 			this.show();
@@ -50,12 +52,18 @@ class Modal {
 				const wrapElement = modalElement.querySelector(`.${s.cove}`);
 				if (shouldCloseOnOverlayClick === true) {
 					// element.onclick = e => e.stopPropagation(); 是否阻止事件冒泡（待定）
-					wrapElement.onclick = () => {
-						this.hide(noRemoval);
-					};
+					wrapElement.onclick = () => this.hide(noRemoval).then(() => {
+						if (onCancel && typeof onCancel === 'function') {
+							onCancel();
+						}
+					});
 				}
 				if (elementClose) {
-					elementClose.onclick = () => this.hide(noRemoval);
+					elementClose.onclick = () => this.hide(noRemoval).then(() => {
+						if (onCancel && typeof onCancel === 'function') {
+							onCancel();
+						}
+					});
 				}
 				return new Promise(resolve => {
 					window.setTimeout(() => {
