@@ -29,6 +29,37 @@ class Modal {
 			onCancel
 		};
 	}
+	
+
+	/**
+	 *
+	 * 关闭取消
+	 * @param {*} noRemoval
+	 * @memberof Modal
+	 */
+	handleClose = (noRemoval) => {
+		const {id, shouldCloseOnOverlayClick, onCancel} = this.state;
+		const modalElement = document.getElementById(id);
+		const elementClose = modalElement.querySelector(`.${s.close}`);
+		const wrapElement = modalElement.querySelector(`.${s.cove}`);
+		if (shouldCloseOnOverlayClick === true) {
+			// element.onclick = e => e.stopPropagation(); 是否阻止事件冒泡（待定）
+			wrapElement.onclick = () => this.hide(noRemoval).then(() => {
+				if (onCancel && typeof onCancel === 'function') {
+					onCancel();
+				}
+			});
+		}
+		if (elementClose) {
+			elementClose.onclick = () => this.hide(noRemoval).then(() => {
+				if (onCancel && typeof onCancel === 'function') {
+					onCancel();
+				}
+			});
+		}
+	}
+
+
 	/**
 	 * @description 创建弹窗
 	 * @param {Object} elements {head: htmlDom, main: htmlDom, footer: htmlDom}
@@ -36,7 +67,7 @@ class Modal {
 	 * @memberof Modal
 	 */
 	create = (elements, noRemoval) => {
-		const {id, shouldCloseOnOverlayClick, onCancel, ...other} = this.state;
+		const {id, ...other} = this.state;
 		let modalElement = document.getElementById(id);
 		if (modalElement) {
 			this.show();
@@ -46,23 +77,8 @@ class Modal {
 		return createDom(template(elements, other), id)
 			.then(() => {
 				modalElement = document.getElementById(id);
-				const elementClose = modalElement.querySelector(`.${s.close}`);
 				const wrapElement = modalElement.querySelector(`.${s.cove}`);
-				if (shouldCloseOnOverlayClick === true) {
-					// element.onclick = e => e.stopPropagation(); 是否阻止事件冒泡（待定）
-					wrapElement.onclick = () => this.hide(noRemoval).then(() => {
-						if (onCancel && typeof onCancel === 'function') {
-							onCancel();
-						}
-					});
-				}
-				if (elementClose) {
-					elementClose.onclick = () => this.hide(noRemoval).then(() => {
-						if (onCancel && typeof onCancel === 'function') {
-							onCancel();
-						}
-					});
-				}
+				this.handleClose(noRemoval);
 				return new Promise(resolve => {
 					window.setTimeout(() => {
 						wrapElement.classList.add(s.coveshow);
@@ -105,7 +121,8 @@ class Modal {
 				wrapElement.classList.add(s.coveshow);
 				resolve();
 			}, 100);
-		});
+		})
+			.then(() => this.handleClose(true));
 	}
 	/**
 	 *
