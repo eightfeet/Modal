@@ -8,16 +8,27 @@ const isPC = !(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|An
  * @param {HTMLElement} dom
  * @returns
  */
-function setEmBase (dom) {
+function setEmBase (dom, parentId) {
 	let docEl = window.document.documentElement;
+	let parEl = window.document.getElementById(parentId);
 	let clientWidth = docEl.clientWidth;
+	let parentWidth = parEl ? parEl.clientWidth : null;
+	const baseFont = parseFloat(__BASEFONT__);
+	const uiWidth = parseFloat(__UIWIDTH__);
+	if (parEl) {
+		if (parentWidth >= uiWidth) {
+			dom.style.fontSize = baseFont + "px";
+		} else {
+			dom.style.fontSize = baseFont * (parentWidth / uiWidth) + "px";
+		}
+		console.log('parEl', dom.style);
+		return;
+	}
 	if (!clientWidth) return;
 	if (isPC) {
 		dom.style.fontSize = '16px';
 		return;
 	}
-	const baseFont = parseFloat(__BASEFONT__);
-	const uiWidth = parseFloat(__UIWIDTH__);
 
 	if (clientWidth >= uiWidth) {
 		dom.style.fontSize = baseFont + "px";
@@ -32,9 +43,10 @@ function setEmBase (dom) {
  * @export
  * @param {HTMLElement} dom (Required) html模板
  * @param {String} target (Required) element id
+ * @param {String} parentId 父级 id
  * @returns
  */
-export function createDom(dom, target, parientId) {
+export function createDom(dom, target, parentId) {
 	return new Promise((resolve, reject) => {
 		if (!target || !dom) {
 			reject('function createDom: params "dom" or "target" not found.');
@@ -47,10 +59,10 @@ export function createDom(dom, target, parientId) {
 		}
 		const div = document.createElement('div');
 		div.setAttribute('id', target);
-		setEmBase(div);
-		const parientIdDom = document.getElementById(parientId);
-		if (parientIdDom) {
-			parientIdDom.appendChild(div);
+		setEmBase(div, parentId);
+		const parentIdDom = document.getElementById(parentId);
+		if (parentIdDom) {
+			parentIdDom.appendChild(div);
 			const targetDom = document.getElementById(target);
 			targetDom.innerHTML = dom;
 			resolve();
