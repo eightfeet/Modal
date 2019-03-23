@@ -13,6 +13,7 @@ class Modal {
 		const stamp = (new Date()).getTime();
 		const {
 			id,
+			parentId,
 			shouldCloseOnOverlayClick,
 			zIndex,
 			closable,
@@ -22,6 +23,7 @@ class Modal {
 		this.state = {
 			id: id || `modal${stamp}-${window.Math.floor(window.Math.random()*100)}`, // modalId 不传自动生成 modal + 时间戳 + 100以内的随机数
 			shouldCloseOnOverlayClick: shouldCloseOnOverlayClick === true, // 点击背景层关闭弹窗
+			parentId,
 			zIndex: zIndex || 100, // 层级
 			closable: closable === false ? false : true, // 是否自带关闭按钮
 			style: style || null // 基础样式
@@ -34,14 +36,14 @@ class Modal {
 	 * @memberof Modal
 	 */
 	create = (elements, noRemoval) => {
-		const {id, shouldCloseOnOverlayClick, ...other} = this.state;
+		const {id, shouldCloseOnOverlayClick, parentId, ...other} = this.state;
 		let modalElement = document.getElementById(id);
 		if (modalElement) {
 			this.show();
 			console.warn('已创建modal时 modal.create === modal.show');
 			return Promise.resolve();
 		}
-		return createDom(template(elements, other), id)
+		return createDom(template(elements, other), id, parentId)
 			.then(() => {
 				modalElement = document.getElementById(id);
 				const elementClose = modalElement.querySelector(`.${s.close}`);

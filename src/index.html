@@ -10,6 +10,7 @@
     <div id="example">click me 创建Modal</div>
     <br /><br />
     <div id="exampleshow">显示已创建的Modal</div>
+    <div id="indom"></div>
     <div style="height: 2000px"></div>
 </body>
 <script>
@@ -17,6 +18,7 @@
         // id: '1111', // 模板节点id 不传可自动生成id
         // zIndex: 100, // modal的层级关系，默认100
         // Animation: false, // 启用动画 默认true
+        parentId: 'indom',
         closable: false, // 可关闭 默认true
         shouldCloseOnOverlayClick: true, // 点击背景层关闭弹窗 默认false
         style: { // 定义modal样式 {overlay: 覆盖层, content: 内容区, close: 关闭按钮}
@@ -108,7 +110,7 @@
     function create1(){ 
         return newModal.create({
             header:'<div style="position:relative; z-index: 90;background-color: yellow;">1</div>',
-        }, true).then(function(){
+        }).then(function(){
             document.getElementById('close').onclick = function(){
                 console.log(document.getElementById('inp').value);
                 return newModal.hide();

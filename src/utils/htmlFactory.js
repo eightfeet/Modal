@@ -34,7 +34,7 @@ function setEmBase (dom) {
  * @param {String} target (Required) element id
  * @returns
  */
-export function createDom(dom, target) {
+export function createDom(dom, target, parientId) {
 	return new Promise((resolve, reject) => {
 		if (!target || !dom) {
 			console.log('666', target);
@@ -49,6 +49,14 @@ export function createDom(dom, target) {
 		const div = document.createElement('div');
 		div.setAttribute('id', target);
 		setEmBase(div);
+		const parientIdDom = document.getElementById(parientId);
+		if (parientIdDom) {
+			parientIdDom.appendChild(div);
+			const targetDom = document.getElementById(target);
+			targetDom.innerHTML = dom;
+			resolve();
+			return;
+		}
 		document
 			.body
 			.appendChild(div);
