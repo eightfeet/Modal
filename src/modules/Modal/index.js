@@ -69,7 +69,7 @@ class Modal {
 	 * @memberof Modal
 	 */
 	create = (elements, noRemoval) => {
-		const {id, shouldCloseOnOverlayClick, parentId, ...other} = this.state;
+		const {id, parentId, ...other} = this.state;
 		let modalElement = document.getElementById(id);
 		if (modalElement) {
 			this.show();
@@ -113,11 +113,11 @@ class Modal {
 		const {id} = this.state;
 		const modalElement = document.getElementById(id);
 		return new Promise((resolve, reject) => {
-			const wrapElement = modalElement.querySelector(`.${s.cove}`);
 			if (!modalElement) {
 				reject('未创建或者已移除modal');
 				return;
 			}
+			const wrapElement = modalElement.querySelector(`.${s.cove}`);
 			modalElement.style.display = 'block';
 			window.setTimeout(() => {
 				wrapElement.classList.add(s.coveshow);
