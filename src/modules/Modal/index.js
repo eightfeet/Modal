@@ -28,6 +28,7 @@ class Modal {
 			zIndex: zIndex || 100, // 层级
 			closable: closable === false ? false : true, // 是否自带关闭按钮
 			style: style || null, // 基础样式
+			contentDom: null,
 			onCancel
 		};
 	}
@@ -80,6 +81,7 @@ class Modal {
 			.then(() => {
 				modalElement = document.getElementById(id);
 				const wrapElement = modalElement.querySelector(`.${s.cove}`);
+				this.state.contentDom = modalElement.querySelector(`.${s.content}`);
 				this.handleClose(noRemoval);
 				return new Promise(resolve => {
 					window.setTimeout(() => {
