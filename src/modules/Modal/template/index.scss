@@ -12,6 +12,7 @@
         opacity: 0;
         transition: opacity 0.3s;
         display: table;
+        text-align: center;
         
         .wrap {
             display: table-cell;
@@ -30,6 +31,8 @@
 
     .content {
         transform: scale3d(0, 0, 0);
+        position: relative;
+        display: inline-block;
         transition: transform 0.3s;
     }
 
