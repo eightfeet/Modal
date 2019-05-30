@@ -10,7 +10,10 @@
         width: 100%;
         overflow: hidden;
         opacity: 0;
-        transition: opacity 0.3s;
+        transition-property:opacity; 
+        -moz-transition-property: opacity; /* Firefox 4 */ 
+        -webkit-transition-property:opacity; /* Safari and Chrome */ 
+        -o-transition-property:opacity; /* Opera */ 
         display: table;
         text-align: center;
         
@@ -22,20 +25,71 @@
         &.coveshow {
           opacity: 1;
           visibility: visible;
-
-          .content {
-            // transform: scale3d(1, 1, 1);
-            transform: translateY(0);
-          }
         }
     }
 
     .content {
-        // transform: scale3d(0, 0, 0);
-        transform: translateY(-80em);
         position: relative;
         display: inline-block;
-        transition: transform 0.3s;
+        transition-property:transform; 
+        -moz-transition-property: transform; /* Firefox 4 */ 
+        -webkit-transition-property:transform; /* Safari and Chrome */ 
+        -o-transition-property:transform; /* Opera */ 
+    }
+
+    .animatezoom {
+        .content {
+            transform: scale3d(0, 0, 0);
+        }
+        &.coveshow {
+            .content {
+                transform: scale3d(1, 1, 1);
+            }
+          }
+    }
+
+    .animateleft {
+        .content {
+            transform: translateX(-80em);
+        }
+        &.coveshow {
+            .content {
+              transform: translateX(0);
+            }
+          }
+    }
+
+    .animateright {
+        .content {
+            transform: translateX(80em);
+        }
+        &.coveshow {
+            .content {
+              transform: translateX(0);
+            }
+          }
+    }
+
+    .animatetop {
+        .content {
+            transform: translateY(-80em);
+        }
+        &.coveshow {
+            .content {
+              transform: translateY(0);
+            }
+          }
+    }
+
+    .animatebottom {
+        .content {
+            transform: translateY(80em);
+        }
+        &.coveshow {
+            .content {
+              transform: translateY(0);
+            }
+          }
     }
 
     .modify {
