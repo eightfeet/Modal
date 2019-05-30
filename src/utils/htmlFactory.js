@@ -22,7 +22,6 @@ function setEmBase (dom, parentId) {
 		} else {
 			dom.style.fontSize = baseFont * (parentWidth / uiWidth) + "px";
 		}
-		console.log('parEl', dom.style);
 		return;
 	}
 	if (!clientWidth) return;

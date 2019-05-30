@@ -13,6 +13,7 @@ class Modal {
 		const stamp = (new Date()).getTime();
 		const {
 			id,
+			animation,
 			parentId,
 			shouldCloseOnOverlayClick,
 			zIndex,
@@ -21,8 +22,11 @@ class Modal {
 			onCancel
 		} = data || {};
 
+		console.log('animation', !!animation);
+
 		this.state = {
 			id: id || `modal${stamp}-${window.Math.floor(window.Math.random()*100)}`, // modalId 不传自动生成 modal + 时间戳 + 100以内的随机数
+			animation,
 			shouldCloseOnOverlayClick: shouldCloseOnOverlayClick === true, // 点击背景层关闭弹窗
 			parentId,
 			zIndex: zIndex || 100, // 层级
