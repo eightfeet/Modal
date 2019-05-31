@@ -56,9 +56,9 @@
     var effectDom = document.getElementById('effect');
 
     effectDom.onchange = function(e) {
-        console.log(effect = e.target.value);
+        effect = e.target.value
     }
-    
+
     var newModal = new ___Modal___({
         // id: '1111', // 模板节点id 不传可自动生成id
         // zIndex: 100, // modal的层级关系，默认100
@@ -159,6 +159,9 @@
                     top: '-3em',
                     right: '0'
                 }
+            },
+            onCancel: function(){
+                console.log(5555);
             }
         });
 
@@ -168,7 +171,7 @@
             header:'<div style="position:relative; z-index: 90;background-color: green;">2</div>',
             main: '<div id="close">Click on me to close.</div>'
         }).then(function(err){
-            console.log(err);
+            console.log(chuang, err);
         });
     }
 
