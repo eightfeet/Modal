@@ -7,10 +7,14 @@
     <title>Modal</title>
 </head>
 <body>
-    <div id="example">click me 创建Modal</div>
-    <br /><br />
-    <div id="exampleshow">显示已创建的Modal</div>
-    <div id="indom" style="position:relative; width:320px; height:500px"></div>
+    <div style="text-align:center">
+        <div id="example2">click me show normal</div>
+        <br />
+        <div id="example">click me show modal in box</div>
+        <br />
+        <div id="exampleshow">show all</div>
+        <div id="indom" style="position:relative; width:320px; height:500px"></div>
+    </div>
     <div style="height: 2000px"></div>
 </body>
 <script>
@@ -79,10 +83,10 @@
     var newModal1 = new ___Modal___({
         // id: '2222222', // 模板节点id 不传可自动生成id
         // zIndex: 100, // modal的层级关系，默认100
-        animation: {
-            from: 'bottom',
-            duration: '0.01s'
-        }, // 启用动画 默认true
+        // animation: {
+        //     from: 'bottom',
+        //     duration: '2s'
+        // }, // 启用动画 默认true
         // closable: false, // 可关闭 默认true
         shouldCloseOnOverlayClick: true, // 点击背景层关闭弹窗 默认false
         style: { // 定义modal样式 {overlay: 覆盖层, content: 内容区, close: 关闭按钮}
@@ -107,6 +111,7 @@
     });
 
     var btn = document.getElementById('example');
+    var btn2 = document.getElementById('example2');
     var btnshow = document.getElementById('exampleshow');
 
     function create1(){ 
@@ -122,7 +127,7 @@
     function create2(){ 
         return newModal1.create({
             header:'<div style="position:relative; z-index: 90;background-color: yellow;">2</div>',
-            main: '<div id="close">点我关闭</div>'
+            main: '<div id="close">Click on me to close.</div>'
         }, true).then(function(){
             document.getElementById('close').onclick = function(){
                 return newModal1.hide(true);
@@ -132,7 +137,10 @@
 
     btn.onclick = function(){
         create1();
-        create2()
+    }
+
+    btn2.onclick = function(){
+        create2();
     }
 
     btnshow.onclick = function(){

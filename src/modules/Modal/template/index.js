@@ -22,14 +22,16 @@ export default function (elements, config) {
 	}
 
 	const { from, duration } = animation || {};
-	let timeset = parseFloat(duration);
 
-	if (!isNaN(timeset)) {
-		timeset = '0.3s';
-	}
-
-	if (timeset <= 0) {
+	const time = parseFloat(duration);
+	let timeset = null;
+	// 处理非数值
+	if (!isNaN(time)) {
+		timeset = `${time}s`;
+	} else if (time <= 0) {
 		timeset = '0.01s';
+	} else {
+		timeset = '0.3s';
 	}
 
 
