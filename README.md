@@ -1,12 +1,38 @@
-### case
+# modal
+
+弹窗模块
+
+#### parame
+
+| 参数                      | 说明                         | 是否必填 | 备注                                                         | 类型    |
+| ------------------------- | ---------------------------- | -------- | ------------------------------------------------------------ | ------- |
+| id                        | 所创建弹窗的id               | 否       | 不传可自动生成id（modal + 时间戳 + 100以内的随机数）         | String  |
+| zIndex                    | modal的样式层级关系          | 否       | 默认100                                                      | Number  |
+| emBase                    | em单位的基准像素             | 否       | 默认自动计算（emBase = document.clientWidth/24）             | Number  |
+| parentId                  | 所挂载的父级ID用于做局部弹窗 | 否       | 默认挂在body下面                                             | String  |
+| closable                  | 是否可关闭                   | 否       | 默认true                                                     | Boolean |
+| shouldCloseOnOverlayClick | 是否点击蒙层关闭弹窗         | 否       | 默认false                                                    | Boolean |
+| style                     | 弹窗样式控制                 | 是       | 定义modal样式<br /> {<br />    overlay: 覆盖层, <br />    content: 内容区, <br />    close: 关闭按钮, <br />    modify: 修饰器<br />}, <br />modify修饰器 是一个数组，每个数组元素对应会创建一个 绝对定位的div层，用于修饰弹窗（参考case） | Object  |
+| animation                 | 动画                         | 否       | {<br />    from: 弹窗起始位置<br /><br />}                   | Object  |
+|                           |                              |          |                                                              |         |
+
+
+
+#### case
+
 ```javascript
 import Modal from '@eightfeet/modal';
 
-var newModal = new Modal({
-        id: 'ModalId', // modalId 不传自动生成 modal + 时间戳 + 100以内的随机数
+const newModal = new Modal({
+        id: 'modalId', // 所创建弹窗的id 不传可自动生成id（modal + 时间戳 + 100以内的随机数）
         zIndex: 100, // modal的层级关系，默认100
-        Animation: false, // 启用动画 默认true
-        closable: false, // 可关闭 默认true
+        emBase: 12, // 基准像素 parent Dom’s fontsize
+        animation: {
+           from: 'bottom',
+           duration: '2s'
+        }, // 启用动画 默认true
+        parentId: 'indom', // modal的创建位置，默认创建在body下
+        closable: false, // modal是否可关闭 默认true
         shouldCloseOnOverlayClick: true, // 点击背景层关闭弹窗 默认false
         style: { // 定义modal样式 {overlay: 覆盖层, content: 内容区, close: 关闭按钮} 
             overlay: {
@@ -43,28 +69,13 @@ var newModal = new Modal({
                     height: '200px',
                     border: '1px solid rgba(0, 0, 255, 0.6)',
                     top: '-4em'
-                },
-                {
-                    backgroundColor: 'rgba(0, 0, 255, 0.4)',
-                    width: '140%',
-                    left: '-20%',
-                    height: '200px',
-                    border: '1px solid rgba(0, 0, 255, 0.6)',
-                    top: '-3em'
-                },
-                {
-                    backgroundColor: 'rgba(0, 0, 255, 0.4)',
-                    width: '150%',
-                    left: '-25%',
-                    height: '200px',
-                    border: '1px solid rgba(0, 0, 255, 0.6)',
-                    top: '-2em'
                 }
             ]
         }
     });
-    var btn = document.getElementById('example');
-    var btnshow = document.getElementById('exampleshow');
+
+    const btn = document.getElementById('exampleBtn');
+
     btn.onclick = function(){ 
         return newModal.create({
             header:'<div style="position:relative; z-index: 90;background-color: yellow;">头部</div>',
@@ -84,7 +95,5 @@ var newModal = new Modal({
             };
         });
     }
-    btnshow.onclick = function(){
-        newModal.show();
-    };
+    
 ```

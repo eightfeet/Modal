@@ -22,16 +22,21 @@
         &.coveshow {
           opacity: 1;
           visibility: visible;
+          .content {
+            opacity: 1;
+          }
         }
     }
 
     .content {
+        opacity: 0;
         position: relative;
         display: inline-block;
-        transition-property:transform; 
+        transition-property:transform, opacity; 
+        transition-timing-function:ease;
     }
 
-    .animatezoom {
+    .animate_zoom_in {
         .content {
             transform: scale3d(0, 0, 0);
         }
@@ -42,9 +47,53 @@
           }
     }
 
-    .animateleft {
+    .animate_zoom_in_left {
         .content {
-            transform: translateX(-80em);
+            transform: scale3d(0, 0, 0) translate3d(-50em, 0, 0);
+        }
+        &.coveshow {
+            .content {
+                transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+            }
+        }
+    }
+
+    .animate_zoom_in_right {
+        .content {
+            transform: scale3d(0, 0, 0) translate3d(50em, 0, 0);
+        }
+        &.coveshow {
+            .content {
+                transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+            }
+        }
+    }
+
+    .animate_zoom_in_down {
+        .content {
+            transform: scale3d(0, 0, 0) translate3d(0, -50em, 0);
+        }
+        &.coveshow {
+            .content {
+                transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+            }
+        }
+    }
+
+    .animate_zoom_in_up {
+        .content {
+            transform: scale3d(0, 0, 0) translate3d(0, 50em, 0);
+        }
+        &.coveshow {
+            .content {
+                transform: scale3d(1, 1, 1) translate3d(0, 0, 0);
+            }
+        }
+    }
+
+    .animate_in_left {
+        .content {
+            transform: translateX(-50em);
         }
         &.coveshow {
             .content {
@@ -53,9 +102,9 @@
           }
     }
 
-    .animateright {
+    .animate_in_right {
         .content {
-            transform: translateX(80em);
+            transform: translateX(50em);
         }
         &.coveshow {
             .content {
@@ -64,9 +113,9 @@
           }
     }
 
-    .animatetop {
+    .animate_in_down {
         .content {
-            transform: translateY(-80em);
+            transform: translateY(-50em);
         }
         &.coveshow {
             .content {
@@ -75,9 +124,9 @@
           }
     }
 
-    .animatebottom {
+    .animate_in_up {
         .content {
-            transform: translateY(80em);
+            transform: translateY(50em);
         }
         &.coveshow {
             .content {

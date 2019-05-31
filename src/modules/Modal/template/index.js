@@ -21,7 +21,7 @@ export default function (elements, config) {
 		doms = (doms || '') + `<div class="${s.modify}" style="${inlineStyle(elementStyle)} z-index: ${zIndex + index * 2}">&nbsp;</div>`;
 	}
 
-	const { from, duration } = animation || {};
+	const { form, duration } = animation || {};
 
 	const time = parseFloat(duration);
 	let timeset = null;
@@ -37,32 +37,44 @@ export default function (elements, config) {
 
 	const transitionDuration = `transition-duration: ${timeset}; -webkit-transition-duration: ${timeset};`;
 
-	let fromStyle = '';
+	let formStyle = '';
 
-	switch (from) {
-		case 'left':
-			fromStyle = s.animateleft;
+	switch (form) {
+		case 'fadeInLeft':
+			formStyle = s.animate_in_left;
 			break;
-		case 'right':
-			fromStyle = s.animateright;
+		case 'fadeInRight':
+			formStyle = s.animate_in_right;
 			break;
-		case 'top':
-			fromStyle = s.animatetop;
+		case 'fadeInDown':
+			formStyle = s.animate_in_down;
 			break;
-		case 'bottom':
-			fromStyle = s.animatebottom;
+		case 'fadeInUp':
+			formStyle = s.animate_in_up;
 			break;
-		case 'zoomout':
-			fromStyle = s.animatezoom;
+		case 'zoomInLeft':
+			formStyle = s.animate_zoom_in_left;
+			break;
+		case 'zoomInRight':
+			formStyle = s.animate_zoom_in_right;
+			break;
+		case 'zoomInDown':
+			formStyle = s.animate_zoom_in_down;
+			break;
+		case 'zoomInUp':
+			formStyle = s.animate_zoom_in_up;
+			break;
+		case 'zoomIn':
+			formStyle = s.animate_zoom_in;
 			break;
 		default:
-			fromStyle = s.animatezoom;
+			formStyle = s.animate_zoom_in;
 			break;
 	}
 
 	return (
 		`<div class="modal____wrap ${s.modal}">
-			<div class="${s.cove} ${fromStyle}" ${overlay && `style="z-index:${zIndex}; ${transitionDuration} ${inlineStyle(overlay)}"`}>
+			<div class="${s.cove} ${formStyle}" ${overlay && `style="z-index:${zIndex}; ${transitionDuration} ${inlineStyle(overlay)}"`}>
 				<div class="${s.wrap}">
 					<div class="${s.content}" style="${transitionDuration}">
 						${doms || ''}
