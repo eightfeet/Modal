@@ -126,7 +126,7 @@ module.exports = (env, argv) => ({
 						loader: "sass-loader",
 						options: {
 							sourceMap: true,
-							data: '@import "variables.scss";',
+							// data: '@import "variables.scss";',
 							includePaths: [path.resolve(__dirname, "src/style")],
 							functions: {
 								"get($keys)" : getSassKey

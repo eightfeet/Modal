@@ -11,9 +11,6 @@
         overflow: hidden;
         opacity: 0;
         transition-property:opacity; 
-        -moz-transition-property: opacity; /* Firefox 4 */ 
-        -webkit-transition-property:opacity; /* Safari and Chrome */ 
-        -o-transition-property:opacity; /* Opera */ 
         display: table;
         text-align: center;
         
@@ -32,9 +29,6 @@
         position: relative;
         display: inline-block;
         transition-property:transform; 
-        -moz-transition-property: transform; /* Firefox 4 */ 
-        -webkit-transition-property:transform; /* Safari and Chrome */ 
-        -o-transition-property:transform; /* Opera */ 
     }
 
     .animatezoom {
