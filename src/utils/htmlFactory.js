@@ -7,9 +7,15 @@ const isPC = !(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|An
  * 其他按规则计算字体值（屏幕宽度:UI宽度 = 屏幕字体大小:UI字体大小）
  * @param {HTMLElement} dom
  * @param {String} parentId
+ * @param {Number} emBase
  * @returns
  */
-function setEmBase (dom, parentId) {
+function setEmBase (dom, parentId, emBase) {
+	const emBaseValidate = Number.isFinite(emBase);
+	if (emBaseValidate) {
+		dom.style.fontSize = `${emBase}px`;
+		return;
+	}
 	let docEl = window.document.documentElement;
 	let parEl = window.document.getElementById(parentId);
 	let clientWidth = docEl.clientWidth;
@@ -46,7 +52,7 @@ function setEmBase (dom, parentId) {
  * @param {String} parentId 父级 id
  * @returns
  */
-export function createDom(dom, target, parentId) {
+export function createDom(dom, target, parentId, emBase) {
 	return new Promise((resolve, reject) => {
 		if (!target || !dom) {
 			reject('function createDom: params "dom" or "target" not found.');
@@ -59,7 +65,7 @@ export function createDom(dom, target, parentId) {
 		}
 		const div = document.createElement('div');
 		div.setAttribute('id', target);
-		setEmBase(div, parentId);
+		setEmBase(div, parentId, emBase);
 		const parentIdDom = document.getElementById(parentId);
 		if (parentIdDom) {
 			parentIdDom.appendChild(div);

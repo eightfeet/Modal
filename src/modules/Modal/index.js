@@ -19,6 +19,7 @@ class Modal {
 			zIndex,
 			closable,
 			style,
+			emBase,
 			onCancel
 		} = data || {};
 
@@ -31,6 +32,7 @@ class Modal {
 			closable: closable === false ? false : true, // 是否自带关闭按钮
 			style: style || null, // 基础样式
 			contentDom: null,
+			emBase,
 			onCancel
 		};
 	}
@@ -72,14 +74,14 @@ class Modal {
 	 * @memberof Modal
 	 */
 	create = (elements, noRemoval) => {
-		const {id, parentId, ...other} = this.state;
+		const {id, parentId, emBase, ...other} = this.state;
 		let modalElement = document.getElementById(id);
 		if (modalElement) {
 			this.show();
 			console.warn('已创建modal时 modal.create === modal.show');
 			return Promise.resolve();
 		}
-		return createDom(template(elements, other), id, parentId)
+		return createDom(template(elements, other), id, parentId, emBase)
 			.then(() => {
 				modalElement = document.getElementById(id);
 				const wrapElement = modalElement.querySelector(`.${s.cove}`);
