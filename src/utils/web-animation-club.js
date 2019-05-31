@@ -63,7 +63,6 @@ export function onceTransitionEnd(element, options = {}) {
 }
   
 // export function onceAnimationEnd(element, options = {}) {
-// console.log(666555);
 // 	return new Promise((resolve) => {
 // 		setCssEndEvent(element, 'animation', options).then(resolve);
 // 	});
