@@ -34,7 +34,7 @@
             <option value="fadeInDown">fadeInDown</option>
             <option value="fadeInLeft">fadeInLeft</option>
             <option value="fadeInRight">fadeInRight</option>
-            <option value="zoomIn">zoomIn</option>
+            <option selected value="zoomIn">zoomIn</option>
             <option value="zoomInUp">zoomInUp</option>
             <option value="zoomInDown">zoomInDown</option>
             <option value="zoomInLeft">zoomInLeft</option>
@@ -66,15 +66,22 @@
                 duration: '0.3s'
             }, // 启用动画 默认true
             closable: true, // 可关闭 默认true
-            shouldCloseOnOverlayClick: true, // 点击背景层关闭弹窗 默认false
+            shouldCloseOnOverlayClick: false, // 点击背景层关闭弹窗 默认false
             style: { // 定义modal样式 {overlay: 覆盖层, content: 内容区, close: 关闭按钮}
                 overlay: {
                     backgroundColor: 'rgba(0,0,0,0.5)'
                 },
+                header: {
+                    borderBottom: '1px solid #eee'
+                },
+                main: {
+                    padding: '1em'
+                },
                 content: {
                     backgroundColor: 'rgba(255, 255, 255, 1)',
                     width: '18em',
-                    // padding: '120px',
+                    borderRadius: '0.5em',
+                    padding: '0.5em',
                     // 设置内容的层级关系
                     zIndex: 107
                 },
@@ -111,6 +118,9 @@
                 // 设置内容的层级关系
                 zIndex: 107
             },
+            main: {
+                padding: '1em'
+            },
             close: {
                 backgroundColor: 'rgba(255, 0, 0, 1)',
                 borderRadius: '1em',
@@ -120,7 +130,7 @@
                 left: '50%'
             },
             header: {
-                border: '1px solid #eee'
+                borderBottom: '1px solid #eee'
             },
             // modify层级按照zIndex（modal的层级）以2为步值递增
             modify: [
@@ -163,16 +173,20 @@
     btn1.onclick = function (){ 
         newModal1.state.animation.form = effect;
         return newModal1.create({
-            header:'Modal1111111',
+            header:'Modal1',
             main: '<div id="close">Click on me to close.</div>',
             footer: '<div>footer</div>'
         }).then(function(){
+            document.getElementById('close').onclick=function(){
+                newModal1.hide();
+            }
         });
     }
 
     btn2.onclick = function (){ 
         return newModal2.create({
             header:'modal2',
+            main: 'A modal in area'
         }).then(function(){
         });
     }
