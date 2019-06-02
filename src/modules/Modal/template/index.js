@@ -11,7 +11,7 @@ import { inlineStyle } from '~/utils/tools';
  */
 export default function (elements, config) {
 	const { style, zIndex, closable, animation } = config || {};
-	const { overlay, content, modify, close } = style || {};
+	const { overlay, content, modify, close, header, main, footer } = style || {};
 	const operateElements = elements || {};
 	const operateModify = modify || [];
 	let doms= null;
@@ -72,18 +72,25 @@ export default function (elements, config) {
 			break;
 	}
 
+	const overlayStyle = inlineStyle(overlay);
+	const contentStyle = inlineStyle(content);
+	const closeStyle = inlineStyle(close);
+	const headerStyle = inlineStyle(header);
+	const mainStyle = inlineStyle(main);
+	const footerStyle = inlineStyle(footer);
+	
 	return (
 		`<div class="modal____wrap ${s.modal}">
-			<div class="${s.cove} ${formStyle}" ${overlay && `style="z-index:${zIndex}; ${transitionDuration} ${inlineStyle(overlay)}"`}>
+			<div class="${s.cove} ${formStyle}" ${overlay && `style="z-index:${zIndex}; ${transitionDuration} ${overlayStyle || ''}"`}>
 				<div class="${s.wrap}">
 					<div class="${s.content}" style="${transitionDuration}">
 						${doms || ''}
-						<div class="${s.modules}" ${content && `style="z-index:${zIndex}; box-sizing: border-box; ${inlineStyle(content)}"`}>
-							${operateElements.header ? `<div class="${s.center}">${operateElements.header}</div>` : ''}
-							${operateElements.main ? `<div class="${s.left}">${operateElements.main}</div>` : ''}
-							${operateElements.footer ? `<div class="${s.center}">${operateElements.footer}</div>` : ''}
+						<div class="${s.modules}" ${content && `style="z-index:${zIndex}; box-sizing: border-box; ${contentStyle || ''}"`}>
+							${operateElements.header ? `<div class="${s.center}" ${headerStyle ? `style="${headerStyle}"` : ''}>${operateElements.header}</div>` : ''}
+							${operateElements.main ? `<div class="${s.left}" ${mainStyle ? `style="${mainStyle}"` : ''}>${operateElements.main}</div>` : ''}
+							${operateElements.footer ? `<div class="${s.center}" ${footerStyle ? `style="${footerStyle}"` : ''}>${operateElements.footer}</div>` : ''}
 						</div>
-						${closable ? (close ? `<div class=${s.close} style="${inlineStyle(close)} z-index: ${zIndex + operateModify.length * 2}"></div>` : '') : ''}
+						${closable ? (close ? `<div class=${s.close} style="${closeStyle || ''} z-index: ${zIndex + operateModify.length * 2}"></div>` : '') : ''}
 					</div>
 				</div>
 			</div>

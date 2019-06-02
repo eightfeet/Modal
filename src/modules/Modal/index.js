@@ -58,11 +58,14 @@ class Modal {
 			});
 		}
 		if (elementClose) {
-			elementClose.onclick = () => this.hide(noRemoval).then(() => {
-				if (onCancel && typeof onCancel === 'function') {
-					onCancel();
-				}
-			});
+			elementClose.onclick = e => {
+				e.stopPropagation();
+				this.hide(noRemoval).then(() => {
+					if (onCancel && typeof onCancel === 'function') {
+						onCancel();
+					}
+				});
+			};
 		}
 	}
 

@@ -14,8 +14,8 @@
             border: 1px solid #eee; padding: 5px; text-align: center
         }
 
-        #example {
-            line-height: 40px; background-color: rgb(20, 159, 64); width:230px; margin: 10px auto; color: #fff; border-radius: 0.2em;
+        #example1 {
+            line-height: 40px; background-color: rgb(20, 159, 64); width:230px; margin: 30px auto 10px auto; color: #fff; border-radius: 0.2em;
         }
 
         #example2 {
@@ -29,7 +29,7 @@
 </head>
 <body>
     <div class="wrap">
-        chose animation<select id="effect">
+        chose animation &nbsp;&nbsp;<select id="effect">
             <option value="fadeInUp">fadeInUp</option>
             <option value="fadeInDown">fadeInDown</option>
             <option value="fadeInLeft">fadeInLeft</option>
@@ -40,9 +40,9 @@
             <option value="zoomInLeft">zoomInLeft</option>
             <option value="zoomInRight">zoomInRight</option>
         </select>
-        <div id="example2">click me show normal</div>
+        <div id="example1">click me show normal</div>
         <br />
-        <div id="example">click me show modal in box</div>
+        <div id="example2">click me show modal in box</div>
         <br />
         <div id="indom"></div>
     </div>
@@ -50,39 +50,77 @@
 </body>
 <script>
     var effect = 'zoomIn';
-    var btn = document.getElementById('example');
+    var btn1 = document.getElementById('example1');
     var btn2 = document.getElementById('example2');
-    var btnshow = document.getElementById('exampleshow');
     var effectDom = document.getElementById('effect');
 
     effectDom.onchange = function(e) {
         effect = e.target.value
     }
 
-    var newModal = new ___Modal___({
+    var newModal1 = new ___Modal___({
+            id: 'modal1', // 模板节点id 不传可自动生成id
+            // zIndex: 100, // modal的层级关系，默认100
+            animation: {
+                form: effect,
+                duration: '0.3s'
+            }, // 启用动画 默认true
+            closable: true, // 可关闭 默认true
+            shouldCloseOnOverlayClick: true, // 点击背景层关闭弹窗 默认false
+            style: { // 定义modal样式 {overlay: 覆盖层, content: 内容区, close: 关闭按钮}
+                overlay: {
+                    backgroundColor: 'rgba(0,0,0,0.5)'
+                },
+                content: {
+                    backgroundColor: 'rgba(255, 255, 255, 1)',
+                    width: '18em',
+                    // padding: '120px',
+                    // 设置内容的层级关系
+                    zIndex: 107
+                },
+                close: {
+                    backgroundColor: 'rgba(255, 0, 0, 1)',
+                    borderRadius: '1em',
+                    width: '1em',
+                    height: '1em',
+                    top: '-3em',
+                    right: '0'
+                }
+            },
+            onCancel: function(){
+            }
+        });
+
+
+    var newModal2 = new ___Modal___({
         // id: '1111', // 模板节点id 不传可自动生成id
         // zIndex: 100, // modal的层级关系，默认100
         emBase: 12, // 基准像素 parent Dom’s fontsize
         parentId: 'indom',
-        closable: false, // 可关闭 默认true
-        shouldCloseOnOverlayClick: true, // 点击背景层关闭弹窗 默认false
+        closable: true, // 可关闭 默认true
+        shouldCloseOnOverlayClick: false, // 点击背景层关闭弹窗 默认false
         style: { // 定义modal样式 {overlay: 覆盖层, content: 内容区, close: 关闭按钮}
             overlay: {
                 backgroundColor: 'rgba(0,0,0,0.5)'
             },
             content: {
-                backgroundColor: 'rgba(100, 100, 100, 0.2)',
+                backgroundColor: 'rgba(255, 255, 255, 1)',
+                borderRadius: '0.5em',
                 minWidth: '20em',
-                // padding: '120px',
+                padding: '1em',
                 // 设置内容的层级关系
                 zIndex: 107
             },
             close: {
-                backgroundColor: 'rgba(0, 0, 0, 1)',
+                backgroundColor: 'rgba(255, 0, 0, 1)',
+                borderRadius: '1em',
                 width: '1em',
                 height: '1em',
                 top: '-3em',
                 left: '50%'
+            },
+            header: {
+                border: '1px solid #eee'
             },
             // modify层级按照zIndex（modal的层级）以2为步值递增
             modify: [
@@ -122,65 +160,22 @@
         }
     });
 
-    function create1(){ 
-        return newModal.create({
-            header:'<div style="position:relative; z-index: 90;background-color: red;">1</div>',
-        }).then(function(){
-            document.getElementById('close').onclick = function(){
-                return newModal.hide(true);
-            };
-        });
-    }
-
-    var newModal1 = new ___Modal___({
-            // id: '2222222', // 模板节点id 不传可自动生成id
-            // zIndex: 100, // modal的层级关系，默认100
-            animation: {
-                form: effect,
-                duration: '0.3s'
-            }, // 启用动画 默认true
-            // closable: false, // 可关闭 默认true
-            shouldCloseOnOverlayClick: true, // 点击背景层关闭弹窗 默认false
-            style: { // 定义modal样式 {overlay: 覆盖层, content: 内容区, close: 关闭按钮}
-                overlay: {
-                    backgroundColor: 'rgba(0,0,0,0.5)'
-                },
-                content: {
-                    backgroundColor: 'rgba(100, 100, 100, 0.2)',
-                    width: '18em',
-                    // padding: '120px',
-                    // 设置内容的层级关系
-                    zIndex: 107
-                },
-                close: {
-                    backgroundColor: 'rgba(0, 0, 0, 1)',
-                    width: '1em',
-                    height: '1em',
-                    top: '-3em',
-                    right: '0'
-                }
-            },
-            onCancel: function(){
-                console.log(5555);
-            }
-        });
-
-    function create2(){ 
+    btn1.onclick = function (){ 
         newModal1.state.animation.form = effect;
         return newModal1.create({
-            header:'<div style="position:relative; z-index: 90;background-color: green;">2</div>',
-            main: '<div id="close">Click on me to close.</div>'
-        }).then(function(err){
-            console.log(chuang, err);
+            header:'Modal1111111',
+            main: '<div id="close">Click on me to close.</div>',
+            footer: '<div>footer</div>'
+        }).then(function(){
         });
     }
 
-    btn.onclick = function(){
-        create1();
+    btn2.onclick = function (){ 
+        return newModal2.create({
+            header:'modal2',
+        }).then(function(){
+        });
     }
 
-    btn2.onclick = function(){
-        create2();
-    }
 </script>
 </html>
