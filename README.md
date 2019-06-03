@@ -1,6 +1,7 @@
 # modal
 
 弹窗模块，需要promise polyfill
+<a href="http://www.eightfeet.cn/Modal/dist/index.html" traget="_blank" >demo</a>
 
 ```sh
 npm i @eightfeet/modal -S
