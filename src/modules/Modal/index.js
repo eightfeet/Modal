@@ -72,7 +72,7 @@ class Modal {
 
 	/**
 	 * @description 创建弹窗
-	 * @param {Object} elements {head: htmlDom, main: htmlDom, footer: htmlDom}
+	 * @param {Object} elements {header: htmlDom, article: htmlDom, footer: htmlDom}
 	 * @param {Boolean} noRemoval 是否移除弹窗，noRemoval=true时点击关闭按钮仅隐藏当前弹窗而不移除当前弹窗Dom
 	 * @memberof Modal
 	 */

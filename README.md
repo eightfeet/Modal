@@ -12,8 +12,8 @@
 | parentId                  | 所挂载的父级ID用于做局部弹窗 | 否       | 默认挂在body下面                                             | String  |
 | closable                  | 是否可关闭                   | 否       | 默认true                                                     | Boolean |
 | shouldCloseOnOverlayClick | 是否点击蒙层关闭弹窗         | 否       | 默认false                                                    | Boolean |
-| style                     | 弹窗样式控制                 | 是       | 定义modal样式<br /> {<br />    overlay: 覆盖层, <br />    content: 内容区, <br />    close: 关闭按钮, <br />    modify: 修饰器<br />}, <br />modify修饰器 是一个数组，每个数组元素对应会创建一个 绝对定位的div层，用于修饰弹窗（参考case） | Object  |
-| animation                 | 动画                         | 否       | {<br />    from: 弹窗起始位置<br /><br />}                   | Object  |
+| style                     | 弹窗样式控制                 | 是       | 定义modal样式<br /> {<br />    overlay: 覆盖层, <br />    content: 内容区, <br />    header: 头部, <br />    main: 内容区, <br />    close: 关闭按钮, <br />    modify: 修饰器<br />}, <br />modify修饰器 是一个数组，每个数组元素对应会创建一个 绝对定位的div层，用于修饰弹窗（参考case） | Object  |
+| animation                 | 动画                         | 否       | {<br />    form: 弹窗形式<br />    duration：持续时长<br />} | Object  |
 |                           |                              |          |                                                              |         |
 
 

@@ -69,12 +69,13 @@
             shouldCloseOnOverlayClick: false, // 点击背景层关闭弹窗 默认false
             style: { // 定义modal样式 {overlay: 覆盖层, content: 内容区, close: 关闭按钮}
                 overlay: {
-                    backgroundColor: 'rgba(0,0,0,0.5)'
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    position: 'fixed'
                 },
                 header: {
                     borderBottom: '1px solid #eee'
                 },
-                main: {
+                article: {
                     padding: '1em'
                 },
                 content: {
@@ -118,7 +119,7 @@
                 // 设置内容的层级关系
                 zIndex: 107
             },
-            main: {
+            article: {
                 padding: '1em'
             },
             close: {
@@ -174,7 +175,7 @@
         newModal1.state.animation.form = effect;
         return newModal1.create({
             header:'Modal1',
-            main: '<div id="close">Click on me to close.</div>',
+            article: '<div id="close">Click on me to close.</div>',
             footer: '<div>footer</div>'
         }).then(function(){
             document.getElementById('close').onclick=function(){
@@ -186,7 +187,7 @@
     btn2.onclick = function (){ 
         return newModal2.create({
             header:'modal2',
-            main: 'A modal in area'
+            article: 'A modal in Div'
         }).then(function(){
         });
     }
