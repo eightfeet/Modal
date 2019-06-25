@@ -24,16 +24,15 @@ export default function (elements, config) {
 	const { form, duration } = animation || {};
 
 	const time = parseFloat(duration);
-	let timeset = null;
+	let timeset = '0.3s';
 	// 处理非数值
 	if (!isNaN(time)) {
 		timeset = `${time}s`;
-	} else if (time <= 0) {
-		timeset = '0.01s';
-	} else {
-		timeset = '0.3s';
+		// 处理小于或等于0的数值
+		if (time <= 0) {
+			timeset = '0.01s';
+		}
 	}
-
 
 	const transitionDuration = `transition-duration: ${timeset}; -webkit-transition-duration: ${timeset};`;
 
