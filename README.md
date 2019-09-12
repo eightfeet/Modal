@@ -1,20 +1,80 @@
 # modal
 
-弹窗模块
+弹窗模块，需要promise polyfill
+<a href="http://www.eightfeet.cn/Modal/dist/index.html" traget="_blank" >demo</a>
+
+```sh
+npm i @eightfeet/modal -S
+```
+
+```javascript
+import Modal from '@eightfeet/modal';
+
+const myModal = new Modal({
+    style: {
+        article: {
+            borderRadius: '0.5em',
+            backgroundColor: '#fff',
+        }
+	}
+});
+
+myModal.create({
+    article: '这是一个弹窗'
+}).then(() => console.log('弹窗已打开'));
+```
+
+
 
 #### parame
 
-| 参数                      | 说明                         | 是否必填 | 备注                                                         | 类型    |
-| ------------------------- | ---------------------------- | -------- | ------------------------------------------------------------ | ------- |
-| id                        | 所创建弹窗的id               | 否       | 不传可自动生成id（modal + 时间戳 + 100以内的随机数）         | String  |
-| zIndex                    | modal的样式层级关系          | 否       | 默认100                                                      | Number  |
-| emBase                    | em单位的基准像素             | 否       | 默认自动计算（emBase = document.clientWidth/24）             | Number  |
-| parentId                  | 所挂载的父级ID用于做局部弹窗 | 否       | 默认挂在body下面                                             | String  |
-| closable                  | 是否可关闭                   | 否       | 默认true                                                     | Boolean |
-| shouldCloseOnOverlayClick | 是否点击蒙层关闭弹窗         | 否       | 默认false                                                    | Boolean |
-| style                     | 弹窗样式控制                 | 是       | 定义modal样式<br /> {<br />    overlay: 覆盖层, <br />    content: 内容区, <br />    close: 关闭按钮, <br />    modify: 修饰器<br />}, <br />modify修饰器 是一个数组，每个数组元素对应会创建一个 绝对定位的div层，用于修饰弹窗（参考case） | Object  |
-| animation                 | 动画                         | 否       | {<br />    from: 弹窗起始位置<br /><br />}                   | Object  |
-|                           |                              |          |                                                              |         |
+| 参数                      | 说明                         | 是否必填 | 备注                                                         | 类型     |
+| ------------------------- | ---------------------------- | -------- | ------------------------------------------------------------ | -------- |
+| id                        | 所创建弹窗的id               | 否       | 不传可自动生成id（modal + 时间戳 + 100以内的随机数）         | String   |
+| zIndex                    | modal的样式层级关系          | 否       | 默认100                                                      | Number   |
+| emBase                    | em单位的基准像素             | 否       | 默认自动计算（emBase = document.clientWidth/24）             | Number   |
+| parentId                  | 所挂载的父级ID用于做局部弹窗 | 否       | 默认挂在body下面，指定父级dom时将挂载在父级dom下，配合css实现局部弹窗 | String   |
+| closable                  | 是否可关闭                   | 否       | 默认true                                                     | Boolean  |
+| shouldCloseOnOverlayClick | 是否点击蒙层关闭弹窗         | 否       | 默认false                                                    | Boolean  |
+| style                     | 弹窗样式                     | 是       | 定义modal样式<br /> {<br />    overlay: 覆盖层, <br />    content: 内容区, <br />    header: 头部, <br />    article: 内容区, <br />    close: 关闭按钮, <br />    modify: 修饰器<br />}, <br />modify修饰器 是一个数组，每个数组元素对应会创建一个 基于弹窗的绝对定位div层，用于修饰弹窗（参考case） | Object   |
+| animation                 | 弹窗动画                     | 否       | {<br />    form: 弹窗动画形式，参考animation附表,<br />    duration：持续时长<br />} | Object   |
+| onCancel                  | 关闭弹窗                     |          | 关闭弹窗时的回调                                             | Function |
+
+###### animation附表
+
+| 参数        | 说明               | 备注 |
+| ----------- | ------------------ | ---- |
+| fadeInUp    | 从底部向上淡入     |      |
+| fadeInDown  | 从顶部向下淡入     |      |
+| fadeInLeft  | 从左向右淡入       |      |
+| fadeInRight | 从右向左淡入       |      |
+| zoomIn      | 从中心放大淡入     | 默认 |
+| zoomInUp    | 从底部向上放大淡入 |      |
+| zoomInDown  | 从顶部向下放大淡入 |      |
+| zoomInLeft  | 从左向右放大淡入   |      |
+| zoomInRight | 从右向左放大淡入   |      |
+
+
+
+#### options
+
+1. ##### create: ƒ (elements, noRemoval) 创建弹窗
+
+   **elements** Object  { header, article, footer } 弹窗内容。
+
+   **noRemoval** Boolean 关闭弹窗时是否移除弹窗Dom。 false移除，true保留。
+
+2. ##### hide: ƒ (noRemoval) 隐藏弹窗
+
+   **noRemoval** Boolean 关闭弹窗时是否移除弹窗Dom。 false移除，true保留。
+
+3. ##### remove: ƒ () 移除弹窗
+
+   移除，将弹窗从body中移除。
+
+4. ##### show: ƒ () 显示弹窗
+
+   显示页面弹窗，如果创建的弹窗隐藏时，调用此方法显示弹窗。
 
 
 
@@ -79,8 +139,8 @@ const newModal = new Modal({
     btn.onclick = function(){ 
         return newModal.create({
             header:'<div style="position:relative; z-index: 90;background-color: yellow;">头部</div>',
-            main: `<div style="background-color: #fff;">
-                        这是一段内容这是一段内容
+            article: `<div style="background-color: #fff;">
+                        这是一段内容
                         <input id="inp" type="text" />
                     </div>`,
             footer: `<div style="background-color: white">

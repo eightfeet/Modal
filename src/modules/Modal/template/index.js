@@ -11,7 +11,7 @@ import { inlineStyle } from '~/utils/tools';
  */
 export default function (elements, config, id) {
 	const { style, zIndex, closable, animation } = config || {};
-	const { overlay, content, modify, close, header, main, footer } = style || {};
+	const { overlay, content, modify, close, header, article, footer } = style || {};
 	const operateElements = elements || {};
 	const operateModify = modify || [];
 	let doms= null;
@@ -24,16 +24,15 @@ export default function (elements, config, id) {
 	const { form, duration } = animation || {};
 
 	const time = parseFloat(duration);
-	let timeset = null;
+	let timeset = '0.3s';
 	// 处理非数值
 	if (!isNaN(time)) {
 		timeset = `${time}s`;
-	} else if (time <= 0) {
-		timeset = '0.01s';
-	} else {
-		timeset = '0.3s';
+		// 处理小于或等于0的数值
+		if (time <= 0) {
+			timeset = '0.01s';
+		}
 	}
-
 
 	const transitionDuration = `transition-duration: ${timeset}; -webkit-transition-duration: ${timeset};`;
 
@@ -76,7 +75,7 @@ export default function (elements, config, id) {
 	const contentStyle = inlineStyle(content);
 	const closeStyle = inlineStyle(close);
 	const headerStyle = inlineStyle(header);
-	const mainStyle = inlineStyle(main);
+	const articleStyle = inlineStyle(article);
 	const footerStyle = inlineStyle(footer);
 	
 	return (
@@ -87,7 +86,7 @@ export default function (elements, config, id) {
 						${doms || ''}
 						<div class="${id}_modules ${s.modules}" ${content && `style="z-index:${zIndex}; box-sizing: border-box; ${contentStyle || ''}"`}>
 							${operateElements.header ? `<div class="${s.center}" ${headerStyle ? `style="${headerStyle}"` : ''}>${operateElements.header}</div>` : ''}
-							${operateElements.main ? `<div class="${s.left}" ${mainStyle ? `style="${mainStyle}"` : ''}>${operateElements.main}</div>` : ''}
+							${operateElements.article ? `<div class="${s.left}" ${articleStyle ? `style="${articleStyle}"` : ''}>${operateElements.article}</div>` : ''}
 							${operateElements.footer ? `<div class="${s.center}" ${footerStyle ? `style="${footerStyle}"` : ''}>${operateElements.footer}</div>` : ''}
 						</div>
 						${closable ? (close ? `<div class=${s.close} style="${closeStyle || ''} z-index: ${zIndex + operateModify.length * 2}"></div>` : '') : ''}

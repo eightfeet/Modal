@@ -2,6 +2,11 @@
 
 const isPC = !(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i));
 
+// isFinite Polyfill
+Number.isFinite = Number.isFinite || function(value) {
+	return typeof value === "number" && isFinite(value);
+};
+
 /**
  * 设置dom的font-size，用于控制子元素的em基准单位，pc端时 font-size = 16px，
  * 如果有emBase传入直接使用emBase为基准字体大小

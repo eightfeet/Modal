@@ -15,11 +15,11 @@
         }
 
         #example1 {
-            line-height: 40px; background-color: rgb(20, 159, 64); width:230px; margin: 30px auto 10px auto; color: #fff; border-radius: 0.2em;
+            line-height: 40px; background-color: rgb(20, 159, 64); width:260px; margin: 30px auto 10px auto; color: #fff; border-radius: 0.2em;
         }
 
         #example2 {
-            line-height: 40px; background-color: rgb(159, 20, 115); width:230px; margin: 20px auto 0 auto; color: #fff; border-radius: 0.2em
+            line-height: 40px; background-color: rgb(159, 20, 115); width:260px; margin: 20px auto 0 auto; color: #fff; border-radius: 0.2em
         }
 
         #indom {
@@ -40,10 +40,11 @@
             <option value="zoomInLeft">zoomInLeft</option>
             <option value="zoomInRight">zoomInRight</option>
         </select>
-        <div id="example1">click me show normal</div>
+        <div id="example1">click me to show</div>
         <br />
-        <div id="example2">click me show modal in box</div>
+        <div id="example2">click me to show modal in box</div>
         <br />
+        <div style="text-align: center"><a href="http://www.eightfeet.cn/Modal/">Documents</a></div>
         <div id="indom"></div>
     </div>
     <div style="height: 2000px"></div>
@@ -61,20 +62,21 @@
     var newModal1 = new ___Modal___({
             id: 'modal1', // 模板节点id 不传可自动生成id
             // zIndex: 100, // modal的层级关系，默认100
-            animation: {
-                form: effect,
-                duration: '0.3s'
-            }, // 启用动画 默认true
+            // animation: {
+            //     form: effect,
+            //     duration: 0.01
+            // }, // 启用动画 默认true
             closable: true, // 可关闭 默认true
             shouldCloseOnOverlayClick: false, // 点击背景层关闭弹窗 默认false
             style: { // 定义modal样式 {overlay: 覆盖层, content: 内容区, close: 关闭按钮}
                 overlay: {
-                    backgroundColor: 'rgba(0,0,0,0.5)'
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    position: 'fixed'
                 },
                 header: {
                     borderBottom: '1px solid #eee'
                 },
-                main: {
+                article: {
                     padding: '1em'
                 },
                 content: {
@@ -118,7 +120,7 @@
                 // 设置内容的层级关系
                 zIndex: 107
             },
-            main: {
+            article: {
                 padding: '1em'
             },
             close: {
@@ -174,7 +176,7 @@
         newModal1.state.animation.form = effect;
         return newModal1.create({
             header:'Modal1',
-            main: '<div id="close">Click on me to close.</div>',
+            article: '<div id="close">Click on me to close.</div>',
             footer: '<div>footer</div>'
         }).then(function(){
             document.getElementById('close').onclick=function(){
@@ -186,7 +188,7 @@
     btn2.onclick = function (){ 
         return newModal2.create({
             header:'modal2',
-            main: 'A modal in area'
+            article: 'A modal in Div'
         }).then(function(){
         });
     }
