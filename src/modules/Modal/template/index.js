@@ -81,7 +81,7 @@ export default function (elements, config, id) {
 	return (
 		`<div class="${id}_wrap ${s.modal}">
 			<div class="${id}_overlay ${s.cove} ${formStyle}" ${overlay && `style="z-index:${zIndex}; ${transitionDuration} ${overlayStyle || ''}"`}>
-				<div class="${id}_wrap ${s.wrap}">
+				<div class="${id}_content_wrap ${s.wrap}">
 					<div class="${id}_content ${s.content}" style="${transitionDuration}">
 						${doms || ''}
 						<div class="${id}_modules ${s.modules}" ${content && `style="z-index:${zIndex}; box-sizing: border-box; ${contentStyle || ''}"`}>
