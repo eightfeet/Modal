@@ -9,7 +9,7 @@ import { inlineStyle } from '~/utils/tools';
  * @param {*} config {zIndex, closable, style}
  * @returns
  */
-export default function (elements, config) {
+export default function (elements, config, id) {
 	const { style, zIndex, closable, animation } = config || {};
 	const { overlay, content, modify, close, header, main, footer } = style || {};
 	const operateElements = elements || {};
@@ -80,12 +80,12 @@ export default function (elements, config) {
 	const footerStyle = inlineStyle(footer);
 	
 	return (
-		`<div class="modal____wrap ${s.modal}">
-			<div class="${s.cove} ${formStyle}" ${overlay && `style="z-index:${zIndex}; ${transitionDuration} ${overlayStyle || ''}"`}>
-				<div class="${s.wrap}">
-					<div class="${s.content}" style="${transitionDuration}">
+		`<div class="${id}_wrap ${s.modal}">
+			<div class="${id}_overlay ${s.cove} ${formStyle}" ${overlay && `style="z-index:${zIndex}; ${transitionDuration} ${overlayStyle || ''}"`}>
+				<div class="${id}_wrap ${s.wrap}">
+					<div class="${id}_content ${s.content}" style="${transitionDuration}">
 						${doms || ''}
-						<div class="${s.modules}" ${content && `style="z-index:${zIndex}; box-sizing: border-box; ${contentStyle || ''}"`}>
+						<div class="${id}_modules ${s.modules}" ${content && `style="z-index:${zIndex}; box-sizing: border-box; ${contentStyle || ''}"`}>
 							${operateElements.header ? `<div class="${s.center}" ${headerStyle ? `style="${headerStyle}"` : ''}>${operateElements.header}</div>` : ''}
 							${operateElements.main ? `<div class="${s.left}" ${mainStyle ? `style="${mainStyle}"` : ''}>${operateElements.main}</div>` : ''}
 							${operateElements.footer ? `<div class="${s.center}" ${footerStyle ? `style="${footerStyle}"` : ''}>${operateElements.footer}</div>` : ''}

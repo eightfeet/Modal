@@ -84,7 +84,7 @@ class Modal {
 			console.warn('已创建modal时 modal.create === modal.show');
 			return Promise.resolve();
 		}
-		return createDom(template(elements, other), id, parentId, emBase)
+		return createDom(template(elements, other, id), id, parentId, emBase)
 			.then(() => {
 				modalElement = document.getElementById(id);
 				const wrapElement = modalElement.querySelector(`.${s.cove}`);
