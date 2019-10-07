@@ -3,6 +3,8 @@ import { onceTransitionEnd } from '~/utils/web-animation-club.js';
 import s from './template/index.scss';
 import { createDom, removeDom } from '~/utils/htmlFactory.js';
 
+const commonErr = 'Modal is not created or Modal is removed!';
+
 class Modal {
 	/**
 	 *Creates an instance of Modal.
@@ -33,7 +35,8 @@ class Modal {
 			style: style || null, // 基础样式
 			contentDom: null,
 			emBase,
-			onCancel
+			onCancel,
+			display: false
 		};
 	}
 	
@@ -86,6 +89,7 @@ class Modal {
 		}
 		return createDom(template(elements, other, id), id, parentId, emBase)
 			.then(() => {
+				this.state.display = true;
 				modalElement = document.getElementById(id);
 				const wrapElement = modalElement.querySelector(`.${s.cove}`);
 				this.state.contentDom = modalElement.querySelector(`.${s.content}`);
@@ -123,13 +127,14 @@ class Modal {
 		const modalElement = document.getElementById(id);
 		return new Promise((resolve, reject) => {
 			if (!modalElement) {
-				reject('未创建或者已移除modal');
+				reject(commonErr);
 				return;
 			}
 			const wrapElement = modalElement.querySelector(`.${s.cove}`);
 			modalElement.style.display = 'block';
 			window.setTimeout(() => {
 				wrapElement.classList.add(s.coveshow);
+				this.state.display = true;
 				resolve();
 			}, 100);
 		})
@@ -146,7 +151,7 @@ class Modal {
 		return new Promise((resolve, reject) => {
 			const wrapElement = modalElement.querySelector(`.${s.cove}`);
 			if (!modalElement) {
-				reject('未创建modal');
+				reject(commonErr);
 				return;
 			}
 			wrapElement.classList.remove(s.coveshow);
@@ -162,6 +167,10 @@ class Modal {
 	 * @memberof Modal
 	 */
 	hide = (noRemoval) => {
+		if (this.state.display === false) {
+			return Promise.reject('The Modal was not opened.');
+		}
+		this.state.display = false;
 		if (noRemoval === true) {
 			return this.unvisible();
 		}
