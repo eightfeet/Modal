@@ -63,10 +63,20 @@ describe('Modal', () => {
 	});
 
 	// e2e测试
-	it('globa constroc', async () => {
+	it('Modal is working！', async () => {
 		const browser = await puppeteer.launch({
-			args: ['--no-sandbox', '--disable-setuid-sandbox']
+			headless: true
 		});
-	});
+		const page = await browser.newPage();
+		await page.goto('http://localhost:9000/');
+		await page.click('div#example1');
+
+		const finalText = await page.$eval('#close', el => el.textContent);
+		expect(finalText).toBe('Click on me to close.');
+
+		const finalHtml = await page.$eval('#close', el => el.outerHTML);
+		expect((finalHtml.indexOf('id="close"') !== -1)).toBe(true);
+
+	}, 10000);
 });
 
