@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
 import Modal from './../src/index';
+import '@babel/runtime/regenerator';
 
 describe('Modal', () => {
 	const modal = new Modal({
@@ -62,10 +63,10 @@ describe('Modal', () => {
 	});
 
 	// e2e测试
-	it('globa constroc', () => {
-		puppeteer.launch({
-			headless: true
-		}).then(() => expect(modal.state.id).toBe('modalId2'));
+	it('globa constroc', async () => {
+		const browser = await puppeteer.launch({
+			args: ['--no-sandbox', '--disable-setuid-sandbox']
+		});
 	});
 });
 
