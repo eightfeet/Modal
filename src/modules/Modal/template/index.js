@@ -6,7 +6,7 @@ import { inlineStyle } from '~/utils/tools';
  *
  * @export
  * @param {Object} elements {head: htmlDom, main: htmlDom, footer: htmlDom}
- * @param {*} config {zIndex, closable, style}
+ * @param {*} config {zIndex, closable, style, animation}
  * @returns
  */
 export default function (elements, config, id) {
@@ -80,11 +80,11 @@ export default function (elements, config, id) {
 	
 	return (
 		`<div class="${id}_wrap ${s.modal}">
-			<div class="${id}_overlay ${s.cove} ${formStyle}" ${overlay && `style="z-index:${zIndex}; ${transitionDuration} ${overlayStyle || ''}"`}>
+			<div class="${id}_overlay ${s.cove} ${formStyle}" ${overlay ? `style="z-index:${zIndex}; ${transitionDuration} ${overlayStyle || ''}"` : ''}>
 				<div class="${id}_content_wrap ${s.wrap}">
 					<div class="${id}_content ${s.content}" style="${transitionDuration}">
 						${doms || ''}
-						<div class="${id}_modules ${s.modules}" ${content && `style="z-index:${zIndex}; box-sizing: border-box; ${contentStyle || ''}"`}>
+						<div class="${id}_modules ${s.modules}" ${content ? `style="z-index:${zIndex}; box-sizing: border-box; ${contentStyle || ''}"` : ''}>
 							${operateElements.header ? `<div class="${s.center}" ${headerStyle ? `style="${headerStyle}"` : ''}>${operateElements.header}</div>` : ''}
 							${operateElements.article ? `<div class="${s.left}" ${articleStyle ? `style="${articleStyle}"` : ''}>${operateElements.article}</div>` : ''}
 							${operateElements.footer ? `<div class="${s.center}" ${footerStyle ? `style="${footerStyle}"` : ''}>${operateElements.footer}</div>` : ''}
