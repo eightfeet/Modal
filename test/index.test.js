@@ -78,5 +78,9 @@ describe('Modal', () => {
 		expect((finalHtml.indexOf('id="close"') !== -1)).toBe(true);
 
 	}, 10000);
+
+	it('next', () => {
+		expect((e => e)('1')).toBe('1');
+	});
 });
 
