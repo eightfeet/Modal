@@ -94,7 +94,7 @@ export default function (elements, config, id) {
 						${doms || ''}
 						<div class="${modalId}_modules ${s.modules}" ${content ? `style="z-index:${layIndex}; box-sizing: border-box; ${contentStyle || ''}"` : ''}>
 							${operateElements.header ? `<div class="${modalId}_header ${s.center}" ${headerStyle ? `style="${headerStyle}"` : ''}>${operateElements.header}</div>` : ''}
-							${operateElements.article ? `<div class="${modalId}_left ${s.left}" ${articleStyle ? `style="${articleStyle}"` : ''}>${operateElements.article}</div>` : ''}
+							${operateElements.article ? `<div class="${modalId}_article ${s.left}" ${articleStyle ? `style="${articleStyle}"` : ''}>${operateElements.article}</div>` : ''}
 							${operateElements.footer ? `<div class="${modalId}_footer ${s.center}" ${footerStyle ? `style="${footerStyle}"` : ''}>${operateElements.footer}</div>` : ''}
 						</div>
 						${closable ? (close ? `<div class="${modalId}_close ${s.close}" style="${closeStyle || ''} z-index: ${layIndex + operateModify.length * 2}"></div>` : '') : ''}

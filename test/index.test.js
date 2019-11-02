@@ -3,7 +3,7 @@ import modal from './virtualModal';
 import '@babel/runtime/regenerator';
 
 describe('Modal', () => {
-	it('new Modal() should to be a object', () => {
+	it('new Modal() should to be an object', () => {
 		expect(Object.prototype.toString.apply(modal)).toBe('[object Object]');
 	});
 

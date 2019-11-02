@@ -1,12 +1,8 @@
 import creatTemplate from '~/modules/Modal/template/index.js';
 
-// * @param {Object} elements {head: htmlDom, main: htmlDom, footer: htmlDom}
-// * @param {*} config {zIndex, closable, style, animation}
-
 describe('Create a Modal template', () => {
-	it('The default value is correct without parameters', () => {
+	it('The default value is correct without parameters id', () => {
 		const template = creatTemplate();
-		console.log(template);
 		expect((
 			template.indexOf('modal_wrap') !== -1 &&
 			template.indexOf('modal_overlay') !== -1 &&
@@ -17,7 +13,66 @@ describe('Create a Modal template', () => {
 			template.indexOf('z-index:100; transition-duration: 0.3s; -webkit-transition-duration: 0.3s;') !== -1
 		)).toBe(true);
 	});
-	it('', () => {
 
+	it('The returned result should be correct when the parameter id = "mid"', () => {
+		const template = creatTemplate(null, null, 'mid');
+		expect((
+			template.indexOf('mid_wrap') !== -1 &&
+			template.indexOf('mid_overlay') !== -1 &&
+			template.indexOf('mid_content_wrap') !== -1 &&
+			template.indexOf('mid_content') !== -1 &&
+			template.indexOf('mid_modules') !== -1
+		)).toBe(true);
 	});
+
+	it('The default value is correct without parameters "elements"', () => {
+		const template = creatTemplate();
+		expect((
+			template.indexOf('modal_header') === -1 &&
+			template.indexOf('modal_article') === -1 &&
+			template.indexOf('modal_footer') === -1
+		)).toBe(true);
+	});
+
+	it('The returned result should be correct when the parameter "elements"', () => {
+		const template = creatTemplate({
+			header: '<div>this is header</div>',
+			article: '<div>this is article</div>',
+			footer: '<div>this is footer</div>'
+		});
+		expect((
+			template.indexOf('modal_header') !== -1 &&
+			template.indexOf('<div>this is header</div>') !== -1 &&
+			template.indexOf('modal_article') !== -1 &&
+			template.indexOf('<div>this is article</div>') !== -1 &&
+			template.indexOf('modal_footer') !== -1 &&
+			template.indexOf('<div>this is footer</div>') !== -1
+		)).toBe(true);
+	});
+
+	it('The returned result should be correct when the parameter "config"', () => {
+		const template = creatTemplate(null, {
+			style:{
+				overlay:{ backgroundColor: 'red' },
+				content:{ backgroundColor: 'green' },
+				modify:[{ backgroundColor: 'yellow' }],
+				close:{ backgroundColor: 'blue' }
+			},
+			closable: true,
+			zIndex: 2000,
+			animation: {
+				form: 'fadeInRight',
+				duration: '500'
+			}
+		}, null);
+		expect((
+			template.indexOf('background-color:red;') !== -1 &&
+			template.indexOf('background-color:green;') !== -1 &&
+			template.indexOf('background-color:yellow;') !== -1 &&
+			template.indexOf('z-index:2000') !== -1 &&
+			template.indexOf('animate_in_right') !== -1 &&
+			template.indexOf('transition-duration: 500s') !== -1
+		)).toBe(true);
+	});
+
 });
