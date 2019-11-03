@@ -75,4 +75,17 @@ describe('Create a Modal template', () => {
 		)).toBe(true);
 	});
 
+	// 设置Modal不可关闭时，不会有close Node
+	it('The returned result should be correct when the parameter "config.closable = false"', () => {
+		const template = creatTemplate(null, {
+			closable: false,
+			style: {
+				close:{ backgroundColor: 'blue' }
+			}
+		}, null);
+		expect((
+			template.indexOf('modal_close') === -1
+		)).toBe(true);
+	});
+
 });

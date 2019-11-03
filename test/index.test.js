@@ -4,7 +4,8 @@ import '@babel/runtime/regenerator';
 import Modal from './../src/index';
 
 const modal = new Modal({
-	id: 'modalId'
+	id: 'modalId',
+	closable: false
 });
 
 /**
@@ -22,6 +23,10 @@ describe('Modal', () => {
 
 	it('Modal.state.id = modalId', () => {
 		expect(modal.state.id).toBe('modalId');
+	});
+
+	it('Modal.state.closable = false', () => {
+		expect(modal.state.closable).toBe(false);
 	});
 
 	// end2end测试
@@ -69,9 +74,22 @@ describe('Modal', () => {
 		// modal2关闭时只隐藏Modal但不移除Modal
 		await page.evaluate(()=>document.querySelector('.modal2_close').click());
 		await page.waitFor(1000);
-		const md2parentDomHide = await page.$eval('#modal2', el => el.getAttribute('style'));
-		expect(md2parentDomHide.indexOf('display: none') !== -1).toBe(true);
+		const md2parentDomHideGetStyle = await page.$eval('#modal2', el => el.getAttribute('style'));
+		expect(md2parentDomHideGetStyle.indexOf('display: none') !== -1).toBe(true);
 
+		// emBase 检查父级基准字体大小设置是否正常
+		expect(md2parentDomHideGetStyle.indexOf('font-size: 12px') !== -1).toBe(true);
+
+		// shouldCloseOnOverlayClick 点击浮层关闭Modal
+		await page.click('div#example2');
+		await page.waitFor(1000);
+		let md2OverlyClickGetDomStyle = await page.$eval('#modal2', el => el.getAttribute('style'));
+		expect(md2OverlyClickGetDomStyle.indexOf('display: block') !== -1).toBe(true);
+
+		await page.evaluate(()=>document.querySelector('.modal2_overlay').click());
+		await page.waitFor(1000);
+		md2OverlyClickGetDomStyle = await page.$eval('#modal2', el => el.getAttribute('style'));
+		expect(md2OverlyClickGetDomStyle.indexOf('display: none') !== -1).toBe(true);
 	}, 10000);
 });
 
