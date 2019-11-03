@@ -102,7 +102,7 @@
 
 
     var newModal2 = new ___Modal___({
-        // id: '1111', // 模板节点id 不传可自动生成id
+        id: 'modal2', // 模板节点id 不传可自动生成id
         // zIndex: 100, // modal的层级关系，默认100
         emBase: 12, // 基准像素 parent Dom’s fontsize
         parentId: 'indom',
@@ -189,8 +189,7 @@
         return newModal2.create({
             header:'modal2',
             article: 'A modal in Div'
-        }).then(function(){
-        });
+        }, true);
     }
 
 </script>
